@@ -143,21 +143,27 @@ def rewrite(text: str, output: Path) -> str:
 
 
 def enhance_about_page(text: str) -> str:
-    """Replace the original unformatted About page body with the maintained design."""
-    start_marker = '<div data-elementor-type="wp-page" data-elementor-id="68"'
-    end_marker = '<div class="ekit-template-content-markup ekit-template-content-footer'
-    start = text.find(start_marker)
-    end = text.find(end_marker, start)
-    if start < 0 or end < 0:
-        raise RuntimeError("Unable to locate the About page content markers")
-    stylesheets = (
-        '<link rel="stylesheet" href="../assets/about-shell.css">'
-        '<link rel="stylesheet" href="../assets/about-page.css">'
-    )
-    if "../assets/about-shell.css" not in text:
-        text = text.replace("</head>", f"{stylesheets}</head>", 1)
+    """Build a clean standalone About page without WordPress layout dependencies."""
     replacement = ABOUT_TEMPLATE.read_text(encoding="utf-8").strip()
-    return text[:start] + replacement + text[end:]
+    return f'''<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Us – Africa Unification Summit</title>
+  <meta name="description" content="Learn about the Africa Unification Summit 2026, its mission, programme, focus sectors, partners, and opportunities to participate.">
+  <link rel="icon" href="../wp-content/uploads/2026/04/cropped-Africa-Unification-Summit-32x32.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/about-shell.css">
+  <link rel="stylesheet" href="../assets/about-page.css">
+</head>
+<body class="aus-about-ready">
+{replacement}
+</body>
+</html>
+'''
 
 
 def page_output(slug: str) -> Path:
