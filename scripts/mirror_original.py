@@ -77,7 +77,11 @@ def extract_assets(text: str, base: str) -> set[str]:
     found: set[str] = set()
     for match in URL_PATTERN.finditer(text):
         value = next((part for part in match.groups() if part), "")
-        candidates = [chunk.strip().split()[0] for chunk in value.split(",")]
+        candidates = [
+            parts[0]
+            for chunk in value.split(",")
+            if (parts := chunk.strip().split())
+        ]
         for candidate in candidates:
             cleaned = clean_url(candidate, base)
             if cleaned:
