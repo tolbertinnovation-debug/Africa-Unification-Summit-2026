@@ -7,6 +7,8 @@ on:
     paths:
       - .github/workflows/deploy-pages.yml
       - scripts/mirror_original.py
+      - templates/about-page.html
+      - assets/about-page.css
 
 permissions:
   contents: write
