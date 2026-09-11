@@ -18,6 +18,7 @@ ORIGIN = "https://africaunificationsummit.org"
 HOSTS = {"africaunificationsummit.org", "www.africaunificationsummit.org"}
 ROOT = Path(__file__).resolve().parents[1]
 ABOUT_TEMPLATE = ROOT / "templates" / "about-page.html"
+SCHEDULE_TEMPLATE = ROOT / "templates" / "schedule-content.html"
 PAGES = {
     "": "/",
     "about-us": "/about-us/",
@@ -166,6 +167,34 @@ def enhance_about_page(text: str) -> str:
 '''
 
 
+def enhance_schedule_page(text: str) -> str:
+    """Build a branded standalone schedule page using the shared summit shell."""
+    shell = ABOUT_TEMPLATE.read_text(encoding="utf-8").strip()
+    schedule = SCHEDULE_TEMPLATE.read_text(encoding="utf-8").strip()
+    shell = re.sub(r'<main id="main-content">.*?</main>', schedule, shell, count=1, flags=re.S)
+    shell = shell.replace('<a class="is-current" href="../about-us/">About Us</a>', '<a href="../about-us/">About Us</a>', 1)
+    shell = shell.replace('<a href="../event-schedule/">Schedule</a>', '<a class="is-current" href="../event-schedule/">Schedule</a>', 1)
+    return f'''<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Schedule – Africa Unification Summit</title>
+  <meta name="description" content="Explore the five-day programme for the Africa Unification Summit 2026 in Monrovia, Liberia, November 16–20, 2026.">
+  <link rel="icon" href="../wp-content/uploads/2026/04/cropped-Africa-Unification-Summit-32x32.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/about-shell.css">
+  <link rel="stylesheet" href="../assets/schedule-page.css">
+</head>
+<body class="aus-about-ready">
+{shell}
+</body>
+</html>
+'''
+
+
 def page_output(slug: str) -> Path:
     return ROOT / "index.html" if not slug else ROOT / slug / "index.html"
 
@@ -219,6 +248,8 @@ def main() -> None:
         rendered = rewrite(source, output)
         if output == page_output("about-us"):
             rendered = enhance_about_page(rendered)
+        elif output == page_output("event-schedule"):
+            rendered = enhance_schedule_page(rendered)
         output.write_text(rendered, encoding="utf-8")
 
     print(f"Static mirror ready: {len(page_documents)} pages, {len(downloaded)} assets")

@@ -8,8 +8,10 @@ on:
       - .github/workflows/deploy-pages.yml
       - scripts/mirror_original.py
       - templates/about-page.html
+      - templates/schedule-content.html
       - assets/about-page.css
       - assets/about-shell.css
+      - assets/schedule-page.css
 
 permissions:
   contents: write
