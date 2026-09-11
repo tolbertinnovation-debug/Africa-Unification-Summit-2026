@@ -64,3 +64,39 @@ body.aus-about-ready #page>.ekit-template-content-header,body.aus-about-ready #p
 .aus-about .aus-site-search svg{width:21px!important;height:21px!important}
 .aus-about .aus-site-header__apply{height:62px!important;min-height:62px!important;padding:8px 6px!important;font-size:.76rem!important}
 }
+
+/* Shared homepage branding for mirrored WordPress pages. */
+body.aus-global-shell{margin:0!important;padding:0!important;overflow-x:hidden!important;font-family:Poppins,Arial,sans-serif}
+body.aus-global-shell #page>.ekit-template-content-header,body.aus-global-shell #page>.ekit-template-content-footer,body.aus-global-shell #back-to-top{display:none!important}
+body.aus-global-shell>.aus-site-header{position:relative;z-index:9999}
+body.aus-global-shell>.aus-site-footer{position:relative;z-index:2}
+.aus-home-social{display:flex;align-items:center;justify-content:center;gap:28px;margin-left:auto}
+.aus-home-social a{display:grid!important;place-items:center;width:28px;height:28px;color:#31353b!important;text-decoration:none}
+.aus-home-social svg{display:block;width:21px;height:21px;overflow:visible}
+.aus-home-social a:hover,.aus-home-social a:focus{color:#111c8d!important}
+.aus-site-header__contact{display:flex;align-items:center;gap:22px}
+.aus-site-search{display:none;color:#152036;text-decoration:none}
+.aus-site-search svg{display:block;width:27px;height:27px}
+.aus-site-header__top{background:#fdf2f2!important}
+.aus-site-header__top>div{justify-content:space-between;min-height:48px}
+.aus-site-header__contact a,.aus-site-header__contact span{color:#28363f!important}
+body.aus-global-shell .elementor-custom-embed-play i{font-size:0!important}
+body.aus-global-shell .elementor-custom-embed-play i:before{content:""!important;display:block!important;width:0!important;height:0!important;border-top:15px solid transparent!important;border-bottom:15px solid transparent!important;border-left:23px solid #081846!important}
+@media(max-width:680px){
+body.aus-global-shell .aus-site-header__top>div{width:100%!important;min-height:46px!important}
+body.aus-global-shell .aus-site-header__contact{display:none!important}
+body.aus-global-shell .aus-home-social{width:100%;margin:0;gap:22px}
+body.aus-global-shell .aus-home-social a{width:24px!important;height:24px!important}
+body.aus-global-shell .aus-home-social svg{width:18px!important;height:18px!important}
+body.aus-global-shell .aus-site-header__nav{display:grid!important;grid-template-columns:64px 1fr minmax(118px,39%)!important;gap:0!important;width:100%!important;min-height:62px!important}
+body.aus-global-shell .aus-site-header__brand,body.aus-global-shell .aus-site-header__links{display:none!important}
+body.aus-global-shell .aus-site-menu{display:block!important;grid-column:1;grid-row:1}
+body.aus-global-shell .aus-site-menu summary{position:relative;width:52px!important;height:46px!important;margin:auto;border:1px solid #d7dbe1!important;border-radius:4px;font-size:0!important}
+body.aus-global-shell .aus-site-menu summary:before,body.aus-global-shell .aus-site-menu summary:after{content:"";position:absolute;left:14px;width:24px;height:3px;border-radius:3px;background:#34434b}
+body.aus-global-shell .aus-site-menu summary:before{top:12px;box-shadow:0 8px 0 #34434b}
+body.aus-global-shell .aus-site-menu summary:after{top:28px}
+body.aus-global-shell .aus-site-menu nav{left:5px;right:auto;top:55px}
+body.aus-global-shell .aus-site-search{display:grid;place-items:center;grid-column:2;grid-row:1;height:62px!important;border-left:1px solid #eef0f3}
+body.aus-global-shell .aus-site-search svg{width:21px;height:21px}
+body.aus-global-shell .aus-site-header__apply{grid-column:3;grid-row:1;height:62px!important;min-height:62px!important;margin:0!important;padding:8px 6px!important;border-radius:0;font-size:.76rem!important}
+}

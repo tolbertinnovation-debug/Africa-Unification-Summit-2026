@@ -195,6 +195,58 @@ def enhance_schedule_page(text: str) -> str:
 '''
 
 
+def add_body_class(text: str, class_name: str) -> str:
+    """Add a class to the first body tag while preserving existing attributes."""
+    def update(match: re.Match[str]) -> str:
+        attrs = match.group(1)
+        class_match = re.search(r'class=(["\'])(.*?)\1', attrs, flags=re.I | re.S)
+        if class_match:
+            classes = class_match.group(2).split()
+            if class_name not in classes:
+                classes.append(class_name)
+            quoted = f'class={class_match.group(1)}{" ".join(classes)}{class_match.group(1)}'
+            attrs = attrs[:class_match.start()] + quoted + attrs[class_match.end():]
+        else:
+            attrs = f' class="{class_name}"' + attrs
+        return f'<body{attrs}>'
+
+    return re.sub(r'<body([^>]*)>', update, text, count=1, flags=re.I)
+
+
+def enhance_shared_brand(text: str, slug: str) -> str:
+    """Apply the homepage-style summit header and footer to a mirrored page."""
+    shell = ABOUT_TEMPLATE.read_text(encoding="utf-8")
+    header_match = re.search(r'<header class="aus-site-header">.*?</header>', shell, flags=re.S)
+    footer_match = re.search(r'<footer class="aus-site-footer">.*?</footer>', shell, flags=re.S)
+    if not header_match or not footer_match:
+        raise RuntimeError("Shared summit header or footer is missing from the template")
+
+    prefix = "./" if not slug else "../"
+    header = header_match.group(0).replace("../", prefix)
+    footer = footer_match.group(0).replace("../", prefix)
+    header = header.replace(' class="is-current"', "")
+    active = {
+        "": (prefix, "Home"),
+        "organizer": (f"{prefix}organizer/", "Organizer"),
+        "speakers": (f"{prefix}speakers/", "Speakers"),
+        "about-the-host": (f"{prefix}about-the-host/", "Host Country"),
+        "blog": (f"{prefix}blog/", "Blog"),
+        "contact": (f"{prefix}contact/", "Contact"),
+    }.get(slug)
+    if active:
+        href, label = active
+        header = header.replace(f'<a href="{href}">{label}</a>', f'<a class="is-current" href="{href}">{label}</a>', 1)
+
+    stylesheet = f'''\n  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{prefix}assets/about-shell.css">'''
+    text = text.replace("</head>", f"{stylesheet}\n</head>", 1)
+    text = add_body_class(text, "aus-global-shell")
+    text = re.sub(r'(<body[^>]*>)', rf'\1\n{header}', text, count=1, flags=re.I)
+    return text.replace("</body>", f"{footer}\n</body>", 1)
+
+
 def page_output(slug: str) -> Path:
     return ROOT / "index.html" if not slug else ROOT / slug / "index.html"
 
@@ -210,13 +262,13 @@ def download_asset(url: str) -> tuple[str, bytes, str]:
 
 def main() -> None:
     queued: set[str] = set()
-    page_documents: list[tuple[Path, str]] = []
+    page_documents: list[tuple[str, Path, str]] = []
 
     for slug, path in PAGES.items():
         url = urllib.parse.urljoin(ORIGIN, path)
         source = request(url).decode("utf-8", errors="replace")
         output = page_output(slug)
-        page_documents.append((output, source))
+        page_documents.append((slug, output, source))
         queued.update(extract_assets(source, url))
         print(f"Fetched page: {path}")
 
@@ -243,13 +295,15 @@ def main() -> None:
                 downloaded.add(url)
         print(f"Downloaded {len(downloaded)} assets")
 
-    for output, source in page_documents:
+    for slug, output, source in page_documents:
         output.parent.mkdir(parents=True, exist_ok=True)
         rendered = rewrite(source, output)
         if output == page_output("about-us"):
             rendered = enhance_about_page(rendered)
         elif output == page_output("event-schedule"):
             rendered = enhance_schedule_page(rendered)
+        else:
+            rendered = enhance_shared_brand(rendered, slug)
         output.write_text(rendered, encoding="utf-8")
 
     print(f"Static mirror ready: {len(page_documents)} pages, {len(downloaded)} assets")
