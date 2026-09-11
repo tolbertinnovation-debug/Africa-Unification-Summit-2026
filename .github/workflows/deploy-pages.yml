@@ -1,24 +1,17 @@
-name: Deploy website to GitHub Pages
+name: Sync original summit media
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  workflow_dispatch:
+    paths:
+      - .github/workflows/deploy-pages.yml
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  sync-media:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -40,16 +33,15 @@ jobs:
           curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-4.29.26-PM-150x150.jpeg" --output assets/partner-4.jpg
           curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/Federation-logo-150x150.png" --output assets/partner-5.png
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      - name: Upload website
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy website
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Save media in the repository
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets
+          if git diff --cached --quiet; then
+            echo "Media is already current."
+          else
+            git commit -m "Add original summit media assets"
+            git push
+          fi
