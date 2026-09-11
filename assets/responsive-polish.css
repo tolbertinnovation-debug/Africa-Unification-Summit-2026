@@ -1,0 +1,101 @@
+/* Responsive finishing layer shared by every Africa Unification Summit page. */
+:root{--aus-content:1180px;--aus-gutter:clamp(18px,4vw,40px);--aus-radius:6px;--aus-shadow:0 18px 46px rgba(7,25,66,.10)}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{min-width:320px;overflow-wrap:break-word}
+img,svg,video,iframe{max-width:100%}
+img{height:auto}
+a,button,summary{-webkit-tap-highlight-color:transparent}
+.aus-site-header,.aus-site-footer,.aus-about,.aus-schedule,.aus-standard{width:100%;max-width:100%;overflow-x:clip}
+.aus-site-header__top>div,.aus-site-header__nav,.aus-site-footer__grid{width:min(var(--aus-content),calc(100% - (2 * var(--aus-gutter))))}
+.aus-site-header__nav{min-height:78px}
+.aus-site-header__brand img{width:62px;height:62px}
+.aus-site-header__apply,.aus-button,.aus-schedule__button,.aus-standard__button{border-radius:var(--aus-radius)}
+.aus-about__card,.aus-about__programme-grid,.aus-about__logo-grid>div,.aus-schedule__day,.aus-schedule__note,.aus-standard__cards article,.aus-standard__people article,.aus-standard__posts article,.aus-standard__contact-grid>a,.aus-standard__contact-grid>div{border-radius:var(--aus-radius)}
+.aus-about__card,.aus-schedule__day,.aus-standard__posts article,.aus-standard__people article{box-shadow:var(--aus-shadow)}
+.aus-about__section,.aus-schedule__intro,.aus-schedule__programme,.aus-standard__section,.aus-standard__split{scroll-margin-top:100px}
+
+/* Large desktops: keep generous space without stretching readable text. */
+@media(min-width:1440px){
+  :root{--aus-content:1240px}
+  .aus-about__hero,.aus-schedule__hero,.aus-standard__hero{min-height:590px}
+  .aus-about__section,.aus-standard__section{padding-top:104px;padding-bottom:104px}
+  .aus-schedule__programme{padding-bottom:108px}
+}
+
+/* Tablets and small laptops. */
+@media(min-width:681px) and (max-width:1050px){
+  :root{--aus-gutter:28px}
+  .aus-site-header__nav{min-height:72px}
+  .aus-site-header__brand img{width:56px;height:56px}
+  .aus-site-menu{margin-left:auto}
+  .aus-site-header__apply{margin-left:0;min-height:44px;padding-inline:17px}
+  .aus-about__hero-inner,.aus-schedule__hero-inner,.aus-standard__hero>div{padding-top:72px;padding-bottom:72px}
+  .aus-about__card-grid--three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .aus-about__card{padding:28px 22px}
+  .aus-about__programme-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aus-about__outcomes{gap:48px}
+  .aus-schedule__day{grid-template-columns:132px minmax(0,1fr)}
+  .aus-schedule__day-content{padding:30px}
+  .aus-standard__split{gap:44px}
+  .aus-standard__cards--four,.aus-standard__people{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aus-standard__cards--three,.aus-standard__posts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aus-site-footer__grid{gap:38px}
+}
+
+/* Phones: compact header, comfortable reading, and touch-friendly controls. */
+@media(max-width:680px){
+  :root{--aus-gutter:17px}
+  .aus-site-header__top>div{width:100%;min-height:38px!important;padding-inline:12px}
+  .aus-home-social{gap:clamp(18px,7vw,28px)!important}
+  .aus-site-header__nav,.aus-about .aus-site-header__nav,body.aus-global-shell .aus-site-header__nav{grid-template-columns:62px minmax(62px,1fr) minmax(116px,38%)!important;min-height:58px!important}
+  .aus-about .aus-site-menu summary,body.aus-global-shell .aus-site-menu summary{width:46px!important;height:42px!important}
+  .aus-about .aus-site-menu summary:before,body.aus-global-shell .aus-site-menu summary:before{top:11px!important}
+  .aus-about .aus-site-menu summary:after,body.aus-global-shell .aus-site-menu summary:after{top:27px!important}
+  .aus-about .aus-site-search,body.aus-global-shell .aus-site-search{height:58px!important}
+  .aus-about .aus-site-header__apply,body.aus-global-shell .aus-site-header__apply{height:58px!important;min-height:58px!important;font-size:.7rem!important;line-height:1.15;text-align:center}
+  .aus-site-menu nav{position:fixed!important;top:96px!important;right:14px!important;left:14px!important;width:auto!important;max-height:calc(100vh - 112px);overflow:auto}
+  .aus-about__hero,.aus-schedule__hero,.aus-standard__hero{min-height:auto}
+  .aus-about__hero-inner,.aus-schedule__hero-inner,.aus-standard__hero>div{width:calc(100% - (2 * var(--aus-gutter)));padding-top:58px;padding-bottom:58px}
+  .aus-about__hero h1,.aus-schedule__hero h1,.aus-standard__hero h1{font-size:clamp(2.35rem,12vw,3.35rem);line-height:1.04;overflow-wrap:normal;word-break:normal}
+  .aus-about__lead,.aus-schedule__lead,.aus-standard__hero p:last-child{font-size:1rem;line-height:1.65}
+  .aus-about__section,.aus-schedule__intro,.aus-schedule__programme,.aus-schedule__note,.aus-standard__section,.aus-standard__split{width:calc(100% - (2 * var(--aus-gutter)))}
+  .aus-about__section,.aus-standard__section{padding-top:58px;padding-bottom:58px}
+  .aus-about__section h2,.aus-about__cta h2,.aus-schedule__intro h2,.aus-schedule__heading h2,.aus-schedule__cta h2,.aus-standard__split h2,.aus-standard__heading h2,.aus-standard__band h2,.aus-standard__cta h2,.aus-standard__center h2{font-size:clamp(1.8rem,9vw,2.35rem)}
+  .aus-about__intro,.aus-about__outcomes,.aus-standard__split{grid-template-columns:minmax(0,1fr)}
+  .aus-about__card-grid--three,.aus-about__programme-grid,.aus-about__logo-grid,.aus-standard__cards--four,.aus-standard__cards--three,.aus-standard__people,.aus-standard__posts{grid-template-columns:minmax(0,1fr)}
+  .aus-about__programme{padding-inline:var(--aus-gutter)}
+  .aus-about__card,.aus-about__programme-grid article{padding:26px 22px}
+  .aus-about__image-wrap>img{width:100%;height:330px}
+  .aus-about__outcomes li{padding:20px}
+  .aus-about__cta,.aus-schedule__cta,.aus-standard__cta,.aus-standard__band{padding-inline:var(--aus-gutter)}
+  .aus-schedule__day{grid-template-columns:74px minmax(0,1fr)}
+  .aus-schedule__day-content{min-width:0;padding:23px 17px}
+  .aus-schedule__date{padding-inline:6px}
+  .aus-schedule__day li{font-size:.9rem}
+  .aus-standard__image-card{min-height:270px;padding:30px}
+  .aus-standard__people img{aspect-ratio:4/4.4}
+  .aus-standard__contact-grid>a,.aus-standard__contact-grid>div{min-height:180px;padding:25px}
+  .aus-site-footer__grid{width:calc(100% - (2 * var(--aus-gutter)))}
+}
+
+/* Very narrow phones. */
+@media(max-width:380px){
+  :root{--aus-gutter:14px}
+  .aus-home-social{gap:16px!important}
+  .aus-site-header__nav,.aus-about .aus-site-header__nav,body.aus-global-shell .aus-site-header__nav{grid-template-columns:56px minmax(52px,1fr) minmax(108px,41%)!important}
+  .aus-about .aus-site-header__apply,body.aus-global-shell .aus-site-header__apply{font-size:.64rem!important;padding-inline:4px!important}
+  .aus-about__facts,.aus-schedule__facts{display:grid;gap:10px}
+  .aus-about__hero h1,.aus-schedule__hero h1,.aus-standard__hero h1{font-size:2.25rem}
+  .aus-schedule__day{grid-template-columns:68px minmax(0,1fr)}
+  .aus-schedule__day-content{padding-inline:14px}
+  .aus-standard__hero-meta{grid-template-columns:1fr}
+}
+
+/* Preserve legibility and layout when users enlarge text. */
+@media(max-width:680px) and (min-resolution:1dppx){
+  .aus-button,.aus-schedule__button,.aus-standard__button{min-height:50px;white-space:normal;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
