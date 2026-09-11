@@ -1,4 +1,4 @@
-name: Sync original summit media
+name: Mirror original summit website
 
 on:
   workflow_dispatch:
@@ -11,37 +11,24 @@ permissions:
   contents: write
 
 jobs:
-  sync-media:
+  mirror-site:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Download original summit media
-        shell: bash
-        run: |
-          mkdir -p assets
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/Africa-Unification-Summit.png" --output assets/logo.png
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-25-at-10.42.18-AM.jpeg" --output assets/hero.jpg
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-25-at-10.42.22-AM.jpeg" --output assets/event.jpg
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-21-at-7.16.03-PM.jpeg" --output assets/speaker-benjamin.jpg
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-21-at-7.16.02-PM.jpeg" --output assets/speaker-elias.jpg
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-03-26-at-1.20.19-PM.jpeg" --output assets/speaker-delvin.jpg
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-27-at-1.13.11-PM-150x150.png" --output assets/partner-1.png
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-26-at-7.48.43-PM-150x150.png" --output assets/partner-2.png
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-3.10.28-PM-1-150x150.jpeg" --output assets/partner-3.jpg
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-4.29.26-PM-150x150.jpeg" --output assets/partner-4.jpg
-          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/Federation-logo-150x150.png" --output assets/partner-5.png
+      - name: Download pages and original assets
+        run: python3 scripts/mirror_original.py
 
-      - name: Save media in the repository
+      - name: Save the static mirror in the repository
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets
+          git add index.html about-us event-schedule organizer speakers about-the-host blog contact wp-content wp-includes
           if git diff --cached --quiet; then
-            echo "Media is already current."
+            echo "The static mirror is already current."
           else
-            git commit -m "Add original summit media assets"
+            git commit -m "Mirror original summit website"
             git push
           fi
