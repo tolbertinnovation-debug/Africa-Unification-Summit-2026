@@ -17,6 +17,7 @@ from pathlib import Path
 ORIGIN = "https://africaunificationsummit.org"
 HOSTS = {"africaunificationsummit.org", "www.africaunificationsummit.org"}
 ROOT = Path(__file__).resolve().parents[1]
+ABOUT_TEMPLATE = ROOT / "templates" / "about-page.html"
 PAGES = {
     "": "/",
     "about-us": "/about-us/",
@@ -141,6 +142,21 @@ def rewrite(text: str, output: Path) -> str:
     return text
 
 
+def enhance_about_page(text: str) -> str:
+    """Replace the original unformatted About page body with the maintained design."""
+    start_marker = '<div data-elementor-type="wp-page" data-elementor-id="68"'
+    end_marker = '<div class="ekit-template-content-markup ekit-template-content-footer'
+    start = text.find(start_marker)
+    end = text.find(end_marker, start)
+    if start < 0 or end < 0:
+        raise RuntimeError("Unable to locate the About page content markers")
+    stylesheet = '<link rel="stylesheet" href="../assets/about-page.css">'
+    if stylesheet not in text:
+        text = text.replace("</head>", f"{stylesheet}</head>", 1)
+    replacement = ABOUT_TEMPLATE.read_text(encoding="utf-8").strip()
+    return text[:start] + replacement + text[end:]
+
+
 def page_output(slug: str) -> Path:
     return ROOT / "index.html" if not slug else ROOT / slug / "index.html"
 
@@ -191,7 +207,10 @@ def main() -> None:
 
     for output, source in page_documents:
         output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(rewrite(source, output), encoding="utf-8")
+        rendered = rewrite(source, output)
+        if output == page_output("about-us"):
+            rendered = enhance_about_page(rendered)
+        output.write_text(rendered, encoding="utf-8")
 
     print(f"Static mirror ready: {len(page_documents)} pages, {len(downloaded)} assets")
 
