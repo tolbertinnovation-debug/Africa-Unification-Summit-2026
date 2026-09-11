@@ -9,6 +9,7 @@ on:
       - scripts/mirror_original.py
       - templates/about-page.html
       - assets/about-page.css
+      - assets/about-shell.css
 
 permissions:
   contents: write

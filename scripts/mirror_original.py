@@ -150,9 +150,12 @@ def enhance_about_page(text: str) -> str:
     end = text.find(end_marker, start)
     if start < 0 or end < 0:
         raise RuntimeError("Unable to locate the About page content markers")
-    stylesheet = '<link rel="stylesheet" href="../assets/about-page.css">'
-    if stylesheet not in text:
-        text = text.replace("</head>", f"{stylesheet}</head>", 1)
+    stylesheets = (
+        '<link rel="stylesheet" href="../assets/about-shell.css">'
+        '<link rel="stylesheet" href="../assets/about-page.css">'
+    )
+    if "../assets/about-shell.css" not in text:
+        text = text.replace("</head>", f"{stylesheets}</head>", 1)
     replacement = ABOUT_TEMPLATE.read_text(encoding="utf-8").strip()
     return text[:start] + replacement + text[end:]
 
