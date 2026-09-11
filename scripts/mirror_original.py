@@ -284,6 +284,16 @@ def enhance_shared_brand(text: str, slug: str) -> str:
   <link rel="stylesheet" href="{prefix}assets/responsive-polish.css">'''
     text = text.replace("</head>", f"{stylesheet}\n</head>", 1)
     text = add_body_class(text, "aus-global-shell")
+    # Correct visible source copy so the published mirror reads professionally.
+    corrections = {
+        "ECOWAS Vision 20250": "ECOWAS Vision 2050",
+        "Inrastructure and Financing Needs": "Infrastructure and Financing Needs",
+        "This is a dynamic a dynamic platform": "This is a dynamic platform",
+        "Event Partners &amp; <span>Sponsers</span>": "Event Partners &amp; <span>Sponsors</span>",
+        "Checkout Recent <span>Blogs</span>": "Explore Recent <span>Updates</span>",
+    }
+    for old, new in corrections.items():
+        text = text.replace(old, new)
     text = re.sub(r'(<body[^>]*>)', rf'\1\n{header}', text, count=1, flags=re.I)
     return text.replace("</body>", f"{footer}\n</body>", 1)
 

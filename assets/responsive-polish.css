@@ -10,9 +10,22 @@ a,button,summary{-webkit-tap-highlight-color:transparent}
 .aus-site-header__nav{min-height:78px}
 .aus-site-header__brand img{width:62px;height:62px}
 .aus-site-header__apply,.aus-button,.aus-schedule__button,.aus-standard__button{border-radius:var(--aus-radius)}
+.aus-site-header__apply,.aus-button,.aus-schedule__button,.aus-standard__button{transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease}
+.aus-site-header__apply:hover,.aus-site-header__apply:focus-visible,.aus-button:hover,.aus-button:focus-visible,.aus-schedule__button:hover,.aus-schedule__button:focus-visible,.aus-standard__button:hover,.aus-standard__button:focus-visible{transform:translateY(-2px);box-shadow:0 12px 26px rgba(7,25,66,.2)}
+.aus-site-header a:focus-visible,.aus-site-footer a:focus-visible{outline:3px solid #e8ae25;outline-offset:4px}
 .aus-about__card,.aus-about__programme-grid,.aus-about__logo-grid>div,.aus-schedule__day,.aus-schedule__note,.aus-standard__cards article,.aus-standard__people article,.aus-standard__posts article,.aus-standard__contact-grid>a,.aus-standard__contact-grid>div{border-radius:var(--aus-radius)}
 .aus-about__card,.aus-schedule__day,.aus-standard__posts article,.aus-standard__people article{box-shadow:var(--aus-shadow)}
 .aus-about__section,.aus-schedule__intro,.aus-schedule__programme,.aus-standard__section,.aus-standard__split{scroll-margin-top:100px}
+
+/* Restore the homepage video symbol when the original icon font is unavailable. */
+body.aus-global-shell .ekit-video-popup-btn i{display:grid!important;place-items:center;font-size:0!important}
+body.aus-global-shell .ekit-video-popup-btn i:before{content:""!important;display:block!important;width:0!important;height:0!important;margin-left:6px;border-top:15px solid transparent!important;border-bottom:15px solid transparent!important;border-left:23px solid #081846!important}
+body.aus-global-shell .ekit-video-popup-btn:focus-visible{outline:4px solid #e8ae25!important;outline-offset:6px}
+
+/* Give original homepage panels the same restrained interaction finish. */
+body.aus-global-shell .elementor-button{transition:transform .2s ease,box-shadow .2s ease!important}
+body.aus-global-shell .elementor-button:hover,body.aus-global-shell .elementor-button:focus-visible{transform:translateY(-2px);box-shadow:0 12px 28px rgba(7,25,66,.18)}
+body.aus-global-shell .elementor-button:focus-visible{outline:3px solid #e8ae25;outline-offset:3px}
 
 /* Large desktops: keep generous space without stretching readable text. */
 @media(min-width:1440px){
