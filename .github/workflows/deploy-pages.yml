@@ -1,0 +1,55 @@
+name: Deploy website to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download original summit media
+        shell: bash
+        run: |
+          mkdir -p assets
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/Africa-Unification-Summit.png" --output assets/logo.png
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-25-at-10.42.18-AM.jpeg" --output assets/hero.jpg
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-25-at-10.42.22-AM.jpeg" --output assets/event.jpg
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-21-at-7.16.03-PM.jpeg" --output assets/speaker-benjamin.jpg
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-21-at-7.16.02-PM.jpeg" --output assets/speaker-elias.jpg
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-03-26-at-1.20.19-PM.jpeg" --output assets/speaker-delvin.jpg
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-27-at-1.13.11-PM-150x150.png" --output assets/partner-1.png
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-26-at-7.48.43-PM-150x150.png" --output assets/partner-2.png
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-3.10.28-PM-1-150x150.jpeg" --output assets/partner-3.jpg
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-4.29.26-PM-150x150.jpeg" --output assets/partner-4.jpg
+          curl --fail --location --retry 3 "https://africaunificationsummit.org/wp-content/uploads/2026/04/Federation-logo-150x150.png" --output assets/partner-5.png
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
