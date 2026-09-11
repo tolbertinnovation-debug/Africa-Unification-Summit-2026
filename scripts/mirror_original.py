@@ -19,6 +19,10 @@ HOSTS = {"africaunificationsummit.org", "www.africaunificationsummit.org"}
 ROOT = Path(__file__).resolve().parents[1]
 ABOUT_TEMPLATE = ROOT / "templates" / "about-page.html"
 SCHEDULE_TEMPLATE = ROOT / "templates" / "schedule-content.html"
+STANDARD_TEMPLATES = {
+    slug: ROOT / "templates" / f"{slug}-content.html"
+    for slug in ("organizer", "speakers", "about-the-host", "blog", "contact")
+}
 PAGES = {
     "": "/",
     "about-us": "/about-us/",
@@ -195,6 +199,40 @@ def enhance_schedule_page(text: str) -> str:
 '''
 
 
+def enhance_standard_page(slug: str) -> str:
+    """Build a branded standalone content page using the shared summit shell."""
+    shell = ABOUT_TEMPLATE.read_text(encoding="utf-8").strip()
+    content = STANDARD_TEMPLATES[slug].read_text(encoding="utf-8").strip()
+    shell = re.sub(r'<main id="main-content">.*?</main>', content, shell, count=1, flags=re.S)
+    shell = shell.replace(' class="is-current"', "")
+    labels = {
+        "organizer": "Organizer",
+        "speakers": "Speakers",
+        "about-the-host": "Host Country",
+        "contact": "Contact",
+    }
+    label = labels.get(slug)
+    if label:
+        shell = shell.replace(f'<a href="../{slug}/">{label}</a>', f'<a class="is-current" href="../{slug}/">{label}</a>', 1)
+    titles = {
+        "organizer": "Organizer",
+        "speakers": "Summit Speakers",
+        "about-the-host": "Host Country",
+        "blog": "News & Insights",
+        "contact": "Contact",
+    }
+    return f'''<!doctype html>
+<html lang="en-US"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{titles[slug]} – Africa Unification Summit</title>
+  <meta name="description" content="Official Africa Unification Summit 2026 information for {titles[slug].lower()}.">
+  <link rel="icon" href="../wp-content/uploads/2026/04/cropped-Africa-Unification-Summit-32x32.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/about-shell.css"><link rel="stylesheet" href="../assets/standard-pages.css">
+</head><body class="aus-about-ready">{shell}</body></html>'''
+
+
 def add_body_class(text: str, class_name: str) -> str:
     """Add a class to the first body tag while preserving existing attributes."""
     def update(match: re.Match[str]) -> str:
@@ -302,6 +340,8 @@ def main() -> None:
             rendered = enhance_about_page(rendered)
         elif output == page_output("event-schedule"):
             rendered = enhance_schedule_page(rendered)
+        elif slug in STANDARD_TEMPLATES:
+            rendered = enhance_standard_page(slug)
         else:
             rendered = enhance_shared_brand(rendered, slug)
         output.write_text(rendered, encoding="utf-8")

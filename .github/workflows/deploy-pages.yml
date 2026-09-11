@@ -9,9 +9,15 @@ on:
       - scripts/mirror_original.py
       - templates/about-page.html
       - templates/schedule-content.html
+      - templates/organizer-content.html
+      - templates/speakers-content.html
+      - templates/about-the-host-content.html
+      - templates/blog-content.html
+      - templates/contact-content.html
       - assets/about-page.css
       - assets/about-shell.css
       - assets/schedule-page.css
+      - assets/standard-pages.css
 
 permissions:
   contents: write
