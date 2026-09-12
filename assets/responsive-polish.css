@@ -27,6 +27,13 @@ body.aus-global-shell .elementor-button{transition:transform .2s ease,box-shadow
 body.aus-global-shell .elementor-button:hover,body.aus-global-shell .elementor-button:focus-visible{transform:translateY(-2px);box-shadow:0 12px 28px rgba(7,25,66,.18)}
 body.aus-global-shell .elementor-button:focus-visible{outline:3px solid #e8ae25;outline-offset:3px}
 
+/* Remove unsupported mirrored embeds and empty source sections gracefully. */
+body.aus-global-shell [data-id="c0ec513"]{display:none!important}
+body.aus-global-shell [data-id="5cb4a19"]>.e-con-inner{justify-content:center!important}
+body.aus-global-shell [data-id="5cb4a19"] [data-id="ff983ce"],body.aus-global-shell [data-id="5cb4a19"] [data-id="b1aad4a"]{display:none!important}
+body.aus-global-shell [data-id="5cb4a19"] [data-id="1a7512c"]{width:min(100%,720px)!important;max-width:720px!important;padding:clamp(34px,6vw,68px)!important;border-left:5px solid #087b40;border-radius:var(--aus-radius);background:#fff;box-shadow:var(--aus-shadow)}
+body.aus-global-shell [data-id="5cb4a19"]{padding-block:clamp(52px,8vw,90px)!important}
+
 /* Large desktops: keep generous space without stretching readable text. */
 @media(min-width:1440px){
   :root{--aus-content:1240px}
@@ -89,6 +96,7 @@ body.aus-global-shell .elementor-button:focus-visible{outline:3px solid #e8ae25;
   .aus-standard__people img{aspect-ratio:4/4.4}
   .aus-standard__contact-grid>a,.aus-standard__contact-grid>div{min-height:180px;padding:25px}
   .aus-site-footer__grid{width:calc(100% - (2 * var(--aus-gutter)))}
+  body.aus-global-shell [data-id="5cb4a19"] [data-id="1a7512c"]{padding:30px 22px!important}
 }
 
 /* Very narrow phones. */
