@@ -69,8 +69,10 @@ body.aus-global-shell [data-id="5cb4a19"]{padding-block:clamp(52px,8vw,90px)!imp
   .aus-about .aus-site-header__nav,body.aus-global-shell .aus-site-header__nav{display:grid!important;grid-template-columns:62px minmax(62px,1fr) minmax(116px,38%)!important;gap:0!important;width:100%!important;min-height:58px!important}
   .aus-about .aus-site-header__brand,.aus-about .aus-site-header__links,body.aus-global-shell .aus-site-header__brand,body.aus-global-shell .aus-site-header__links{display:none!important}
   .aus-about .aus-site-menu,body.aus-global-shell .aus-site-menu{display:block!important;grid-column:1;grid-row:1}
-  .aus-about .aus-site-menu summary,body.aus-global-shell .aus-site-menu summary{width:46px!important;height:42px!important}
+  .aus-about .aus-site-menu summary,body.aus-global-shell .aus-site-menu summary{position:relative;display:block!important;overflow:hidden!important;width:46px!important;height:42px!important;margin:auto!important;padding:0!important;border:1px solid #d7dbe1!important;border-radius:4px!important;font-size:0!important;line-height:0!important;color:transparent!important}
+  .aus-about .aus-site-menu summary:before,.aus-about .aus-site-menu summary:after,body.aus-global-shell .aus-site-menu summary:before,body.aus-global-shell .aus-site-menu summary:after{content:""!important;position:absolute!important;left:11px!important;width:24px!important;height:3px!important;border-radius:3px!important;background:#34434b!important}
   .aus-about .aus-site-menu summary:before,body.aus-global-shell .aus-site-menu summary:before{top:11px!important}
+  .aus-about .aus-site-menu summary:before,body.aus-global-shell .aus-site-menu summary:before{box-shadow:0 8px 0 #34434b!important}
   .aus-about .aus-site-menu summary:after,body.aus-global-shell .aus-site-menu summary:after{top:27px!important}
   .aus-about .aus-site-search,body.aus-global-shell .aus-site-search{height:58px!important}
   .aus-about .aus-site-header__apply,body.aus-global-shell .aus-site-header__apply{height:58px!important;min-height:58px!important;font-size:.7rem!important;line-height:1.15;text-align:center}
