@@ -284,6 +284,14 @@ def enhance_shared_brand(text: str, slug: str) -> str:
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{prefix}assets/about-shell.css">
   <link rel="stylesheet" href="{prefix}assets/responsive-polish.css?v=20260912-11">'''
+    # LiteSpeed can temporarily expose an empty d41d8... CSS bundle while its
+    # cache is rebuilding. Fall back to the last complete mirrored bundle.
+    text = re.sub(
+        r'(?P<start>href=["\'])(?:\./|\.\./)*wp-content/litespeed/css/d41d8cd98f00b204e9800998ecf8427e\.css[^"\']*(?P<end>["\'])',
+        rf'\g<start>{prefix}wp-content/litespeed/css/2d7f5f6589f67dae83967835c3e6d302.css?ver=b5fd5\g<end>',
+        text,
+        flags=re.I,
+    )
     text = text.replace("</head>", f"{stylesheet}\n</head>", 1)
     text = add_body_class(text, "aus-global-shell")
     # Correct visible source copy so the published mirror reads professionally.
