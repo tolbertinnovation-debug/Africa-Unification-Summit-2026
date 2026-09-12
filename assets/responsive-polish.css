@@ -40,6 +40,41 @@ body.aus-global-shell [data-id="5cb4a19"] [data-id="ff983ce"],body.aus-global-sh
 body.aus-global-shell [data-id="5cb4a19"] [data-id="1a7512c"]{width:min(100%,720px)!important;max-width:720px!important;padding:clamp(34px,6vw,68px)!important;border-left:5px solid #087b40;border-radius:var(--aus-radius);background:#fff;box-shadow:var(--aus-shadow)}
 body.aus-global-shell [data-id="5cb4a19"]{padding-block:clamp(52px,8vw,90px)!important}
 
+/* Homepage summit priorities: replace missing icon-font glyphs with branded cards. */
+body.aus-global-shell [data-id="217407b"]{margin-top:28px!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-items{display:grid!important;gap:11px!important;margin:0!important;padding:0!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-item{
+  display:grid!important;
+  grid-template-columns:38px minmax(0,1fr)!important;
+  gap:13px!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:14px 16px!important;
+  border:1px solid #e4e9f0!important;
+  border-left:4px solid #087b40!important;
+  border-radius:7px!important;
+  background:#fff!important;
+  box-shadow:0 8px 24px rgba(7,25,66,.07)!important
+}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-item:nth-child(even){border-left-color:#e8ae25!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-icon{display:grid!important;place-items:center!important;width:34px!important;height:34px!important;border-radius:50%!important;background:#eaf6ef!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-item:nth-child(even) .elementor-icon-list-icon{background:#fff5d8!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-icon i{display:grid!important;place-items:center!important;width:100%!important;height:100%!important;color:#087b40!important;font-family:Arial,sans-serif!important;font-size:0!important;font-style:normal!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-icon i:before{content:"\2713"!important;font-family:Arial,sans-serif!important;font-size:1rem!important;font-weight:800!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-item:nth-child(even) i{color:#b57b00!important}
+body.aus-global-shell [data-id="217407b"] .elementor-icon-list-text{color:#17213a!important;font-size:.96rem!important;font-weight:600!important;line-height:1.55!important}
+
+/* Keep the organizer identity and signature together as one professional card. */
+body.aus-global-shell [data-id="0b5b1f0"]{margin-top:30px!important;padding:0!important;border:1px solid #e1e6ee!important;border-top:4px solid #e8ae25!important;border-radius:8px!important;background:linear-gradient(135deg,#f7f9fc,#fff)!important;box-shadow:0 14px 36px rgba(7,25,66,.09)!important;overflow:hidden!important}
+body.aus-global-shell [data-id="0b5b1f0"]>.e-con-inner{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:22px!important;align-items:center!important;width:100%!important;padding:22px 24px!important}
+body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-wrapper{display:flex!important;gap:17px!important;align-items:center!important;text-align:left!important}
+body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-img{flex:0 0 88px!important;width:88px!important;margin:0!important}
+body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-img img{display:block!important;width:88px!important;height:88px!important;border:4px solid #fff!important;border-radius:50%!important;object-fit:cover!important;box-shadow:0 8px 22px rgba(7,25,66,.18)!important}
+body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-title{margin:0 0 6px!important;color:#071942!important;font-size:1.18rem!important;line-height:1.25!important}
+body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-description{margin:0!important;color:#087b40!important;font-size:.7rem!important;font-weight:800!important;letter-spacing:.1em!important;text-transform:uppercase!important}
+body.aus-global-shell [data-id="3fbae03"]{width:120px!important;max-width:120px!important;margin:0!important}
+body.aus-global-shell [data-id="3fbae03"] img{display:block!important;width:120px!important;height:auto!important;opacity:.82!important}
+
 /* Inner-page heroes: one polished visual language across every section. */
 .aus-about__hero,.aus-schedule__hero,.aus-standard__hero{
   position:relative;
@@ -311,6 +346,17 @@ a.aus-apply-action.is-clicked:not(.aus-site-header__apply):after{content:"\2713"
   .aus-standard__contact-grid>a,.aus-standard__contact-grid>div{min-height:180px;padding:25px}
   .aus-site-footer__grid{width:calc(100% - (2 * var(--aus-gutter)))}
   body.aus-global-shell [data-id="5cb4a19"] [data-id="1a7512c"]{padding:30px 22px!important}
+  body.aus-global-shell [data-id="217407b"]{margin-top:22px!important}
+  body.aus-global-shell [data-id="217407b"] .elementor-icon-list-item{grid-template-columns:34px minmax(0,1fr)!important;gap:11px!important;padding:13px 14px!important}
+  body.aus-global-shell [data-id="217407b"] .elementor-icon-list-icon{width:31px!important;height:31px!important}
+  body.aus-global-shell [data-id="217407b"] .elementor-icon-list-text{font-size:.89rem!important;line-height:1.48!important}
+  body.aus-global-shell [data-id="0b5b1f0"]>.e-con-inner{grid-template-columns:minmax(0,1fr) 86px!important;gap:12px!important;padding:18px!important}
+  body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-wrapper{gap:13px!important}
+  body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-img{flex-basis:72px!important;width:72px!important}
+  body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-img img{width:72px!important;height:72px!important}
+  body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-title{font-size:1rem!important}
+  body.aus-global-shell [data-id="3fbae03"]{width:86px!important;max-width:86px!important}
+  body.aus-global-shell [data-id="3fbae03"] img{width:86px!important}
 }
 
 /* Very narrow phones. */
