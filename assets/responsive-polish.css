@@ -66,13 +66,17 @@ body.aus-global-shell [data-id="5cb4a19"]{padding-block:clamp(52px,8vw,90px)!imp
 @media(max-width:680px){
   :root{--aus-gutter:17px}
   .aus-site-header__top>div{width:100%;min-height:38px!important;padding-inline:12px}
-  .aus-site-header__nav,.aus-about .aus-site-header__nav,body.aus-global-shell .aus-site-header__nav{grid-template-columns:62px minmax(62px,1fr) minmax(116px,38%)!important;min-height:58px!important}
+  .aus-about .aus-site-header__nav,body.aus-global-shell .aus-site-header__nav{display:grid!important;grid-template-columns:62px minmax(62px,1fr) minmax(116px,38%)!important;gap:0!important;width:100%!important;min-height:58px!important}
+  .aus-about .aus-site-header__brand,.aus-about .aus-site-header__links,body.aus-global-shell .aus-site-header__brand,body.aus-global-shell .aus-site-header__links{display:none!important}
+  .aus-about .aus-site-menu,body.aus-global-shell .aus-site-menu{display:block!important;grid-column:1;grid-row:1}
   .aus-about .aus-site-menu summary,body.aus-global-shell .aus-site-menu summary{width:46px!important;height:42px!important}
   .aus-about .aus-site-menu summary:before,body.aus-global-shell .aus-site-menu summary:before{top:11px!important}
   .aus-about .aus-site-menu summary:after,body.aus-global-shell .aus-site-menu summary:after{top:27px!important}
   .aus-about .aus-site-search,body.aus-global-shell .aus-site-search{height:58px!important}
   .aus-about .aus-site-header__apply,body.aus-global-shell .aus-site-header__apply{height:58px!important;min-height:58px!important;font-size:.7rem!important;line-height:1.15;text-align:center}
-  .aus-site-menu nav{position:fixed!important;top:96px!important;right:14px!important;left:14px!important;width:auto!important;max-height:calc(100vh - 112px);overflow:auto}
+  .aus-site-menu nav{position:fixed!important;top:64px!important;right:14px!important;left:14px!important;width:auto!important;max-height:calc(100vh - 80px);overflow:auto}
+  .aus-about .aus-site-search,body.aus-global-shell .aus-site-search{display:grid!important;place-items:center;grid-column:2;grid-row:1;border-left:1px solid #eef0f3}
+  .aus-about .aus-site-header__apply,body.aus-global-shell .aus-site-header__apply{grid-column:3;grid-row:1;margin:0!important;border-radius:0!important}
   .aus-about__hero,.aus-schedule__hero,.aus-standard__hero{min-height:auto}
   .aus-about__hero-inner,.aus-schedule__hero-inner,.aus-standard__hero>div{width:calc(100% - (2 * var(--aus-gutter)));padding-top:58px;padding-bottom:58px}
   .aus-about__hero h1,.aus-schedule__hero h1,.aus-standard__hero h1{font-size:clamp(2.35rem,12vw,3.35rem);line-height:1.04;overflow-wrap:normal;word-break:normal}
@@ -101,7 +105,7 @@ body.aus-global-shell [data-id="5cb4a19"]{padding-block:clamp(52px,8vw,90px)!imp
 /* Very narrow phones. */
 @media(max-width:380px){
   :root{--aus-gutter:14px}
-  .aus-site-header__nav,.aus-about .aus-site-header__nav,body.aus-global-shell .aus-site-header__nav{grid-template-columns:56px minmax(52px,1fr) minmax(108px,41%)!important}
+  .aus-about .aus-site-header__nav,body.aus-global-shell .aus-site-header__nav{grid-template-columns:56px minmax(52px,1fr) minmax(108px,41%)!important}
   .aus-about .aus-site-header__apply,body.aus-global-shell .aus-site-header__apply{font-size:.64rem!important;padding-inline:4px!important}
   .aus-about__facts,.aus-schedule__facts{display:grid;gap:10px}
   .aus-about__hero h1,.aus-schedule__hero h1,.aus-standard__hero h1{font-size:2.25rem}
