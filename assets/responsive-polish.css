@@ -26,7 +26,23 @@ a,button,summary{-webkit-tap-highlight-color:transparent}
 /* Restore the homepage video symbol when the original icon font is unavailable. */
 body.aus-global-shell .ekit-video-popup-btn i{display:grid!important;place-items:center;font-size:0!important}
 body.aus-global-shell .ekit-video-popup-btn i:before{content:""!important;display:block!important;width:0!important;height:0!important;margin-left:6px;border-top:15px solid transparent!important;border-bottom:15px solid transparent!important;border-left:23px solid #081846!important}
+body.aus-global-shell .ekit-video-popup-btn{display:grid!important;place-items:center!important;width:108px!important;height:108px!important;border:5px solid rgba(255,255,255,.38)!important;border-radius:50%!important;background:#fff!important;box-shadow:0 0 0 12px rgba(255,255,255,.15),0 18px 42px rgba(2,10,31,.34)!important;transition:transform .2s ease,box-shadow .2s ease!important}
+body.aus-global-shell .ekit-video-popup-btn:hover,body.aus-global-shell .ekit-video-popup-btn:focus-visible{transform:scale(1.05)!important;box-shadow:0 0 0 12px rgba(232,174,37,.25),0 22px 50px rgba(2,10,31,.4)!important}
 body.aus-global-shell .ekit-video-popup-btn:focus-visible{outline:4px solid #e8ae25!important;outline-offset:6px}
+
+/* Native Summit video modal: reliable on GitHub Pages without WordPress JS. */
+body.aus-video-open{overflow:hidden!important}
+.aus-video-modal[hidden]{display:none!important}
+.aus-video-modal{position:fixed;z-index:100002;inset:0;display:grid;place-items:center;padding:clamp(14px,4vw,38px);background:rgba(2,8,25,.9);backdrop-filter:blur(8px);opacity:0;transition:opacity .22s ease}
+.aus-video-modal.is-visible{opacity:1}
+.aus-video-modal__dialog{position:relative;width:min(980px,100%);overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:#050b1b;box-shadow:0 28px 90px rgba(0,0,0,.52);transform:translateY(12px) scale(.98);transition:transform .22s ease}
+.aus-video-modal.is-visible .aus-video-modal__dialog{transform:translateY(0) scale(1)}
+.aus-video-modal__bar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:58px;padding:10px 12px 10px 20px;border-bottom:3px solid #e8ae25;color:#fff;background:linear-gradient(100deg,#071942,#102862)}
+.aus-video-modal__bar strong{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.aus-video-modal__close{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid rgba(255,255,255,.25);border-radius:50%;color:#fff;background:rgba(255,255,255,.08);font:700 1.35rem/1 Arial,sans-serif;cursor:pointer}
+.aus-video-modal__close:hover,.aus-video-modal__close:focus-visible{color:#071942;background:#e8ae25;outline:0}
+.aus-video-modal video{display:block;width:100%;max-height:calc(100vh - 150px);background:#000;object-fit:contain}
+.aus-video-modal__hint{margin:0;padding:10px 18px;color:rgba(255,255,255,.65);background:#07132e;font-size:.7rem;text-align:center}
 
 /* Give original homepage panels the same restrained interaction finish. */
 body.aus-global-shell .elementor-button{transition:transform .2s ease,box-shadow .2s ease!important}
@@ -397,6 +413,11 @@ a.aus-apply-action.is-clicked:not(.aus-site-header__apply):after{content:"\2713"
   .aus-standard__country-facts>div:nth-child(2){border-left-color:#e8ae25}
   .aus-standard__country-facts>div:nth-child(3){border-left-color:#111c8d}
   .aus-standard__country-facts span{margin:0}
+  body.aus-global-shell .ekit-video-popup-btn{width:92px!important;height:92px!important;border-width:4px!important}
+  .aus-video-modal{padding:10px}
+  .aus-video-modal__bar{min-height:52px;padding-left:14px}
+  .aus-video-modal__bar strong{font-size:.68rem}
+  .aus-video-modal video{max-height:calc(100vh - 132px)}
 }
 
 /* Very narrow phones. */

@@ -1,6 +1,74 @@
 (function () {
   "use strict";
 
+  var videoTriggers = document.querySelectorAll(".ekit-video-popup-btn");
+  var videoModal;
+  var modalVideo;
+  var lastVideoTrigger;
+
+  var closeVideo = function () {
+    if (!videoModal || videoModal.hidden) return;
+    modalVideo.pause();
+    videoModal.classList.remove("is-visible");
+    document.body.classList.remove("aus-video-open");
+    window.setTimeout(function () {
+      videoModal.hidden = true;
+      modalVideo.removeAttribute("src");
+      modalVideo.load();
+      if (lastVideoTrigger) lastVideoTrigger.focus();
+    }, 220);
+  };
+
+  if (videoTriggers.length) {
+    videoModal = document.createElement("div");
+    videoModal.className = "aus-video-modal";
+    videoModal.hidden = true;
+    videoModal.setAttribute("role", "dialog");
+    videoModal.setAttribute("aria-modal", "true");
+    videoModal.setAttribute("aria-label", "Africa Unification Summit video");
+    videoModal.innerHTML =
+      '<div class="aus-video-modal__dialog">' +
+      '<div class="aus-video-modal__bar"><strong>Africa Unification Summit 2026</strong>' +
+      '<button class="aus-video-modal__close" type="button" aria-label="Close video">\u00d7</button></div>' +
+      '<video controls playsinline preload="metadata"></video>' +
+      '<p class="aus-video-modal__hint">Use the video controls to play, pause, adjust volume, or enter full screen.</p>' +
+      '</div>';
+    document.body.appendChild(videoModal);
+    modalVideo = videoModal.querySelector("video");
+
+    videoModal.querySelector(".aus-video-modal__close").addEventListener("click", closeVideo);
+    videoModal.addEventListener("click", function (event) {
+      if (event.target === videoModal) closeVideo();
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeVideo();
+    });
+
+    videoTriggers.forEach(function (trigger) {
+      trigger.addEventListener("click", function (event) {
+        event.preventDefault();
+        var selector = trigger.getAttribute("href");
+        var sourceWrap = selector && selector.charAt(0) === "#" ? document.querySelector(selector) : null;
+        var sourceNode = sourceWrap && sourceWrap.querySelector("video source");
+        var sourceVideo = sourceWrap && sourceWrap.querySelector("video");
+        var sourceUrl = sourceNode
+          ? (sourceNode.src || sourceNode.getAttribute("src"))
+          : sourceVideo && (sourceVideo.currentSrc || sourceVideo.src || sourceVideo.getAttribute("src"));
+        if (!sourceUrl) return;
+
+        lastVideoTrigger = trigger;
+        modalVideo.src = sourceUrl;
+        videoModal.hidden = false;
+        document.body.classList.add("aus-video-open");
+        window.requestAnimationFrame(function () { videoModal.classList.add("is-visible"); });
+        modalVideo.play().catch(function () {
+          /* Browser autoplay policies may require the visible native play control. */
+        });
+        videoModal.querySelector(".aus-video-modal__close").focus();
+      });
+    });
+  }
+
   var menuLinks = document.querySelectorAll(".aus-site-menu nav a");
   var cleanPath = function (value) {
     return value.replace(/index\.html$/i, "").replace(/\/+$/, "") || "/";
