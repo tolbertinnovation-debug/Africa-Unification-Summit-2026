@@ -19,6 +19,7 @@ on:
       - assets/schedule-page.css
       - assets/standard-pages.css
       - assets/responsive-polish.css
+      - assets/summit-interactions.js
 
 permissions:
   contents: write

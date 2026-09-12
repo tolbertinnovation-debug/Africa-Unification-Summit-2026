@@ -115,6 +115,80 @@ body.aus-global-shell [data-id="5cb4a19"]{padding-block:clamp(52px,8vw,90px)!imp
   background:linear-gradient(135deg,#0a8a49,#057039)
 }
 
+/* Application actions: confident, inviting, and rewarding to tap. */
+a.aus-apply-action:not(.aus-site-header__apply){
+  position:relative;
+  isolation:isolate;
+  gap:10px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  color:#fff!important;
+  background:linear-gradient(135deg,#0b9650 0%,#078242 48%,#056a36 100%)!important;
+  box-shadow:0 13px 30px rgba(5,112,57,.3),inset 0 1px 0 rgba(255,255,255,.2);
+  letter-spacing:.055em
+}
+a.aus-apply-action:not(.aus-site-header__apply):before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  background:linear-gradient(110deg,transparent 18%,rgba(255,255,255,.28) 47%,transparent 74%);
+  transform:translateX(-125%);
+  animation:aus-action-shine 4.4s ease-in-out infinite
+}
+a.aus-apply-action:not(.aus-site-header__apply):after{
+  content:"\2192";
+  position:relative;
+  z-index:1;
+  display:inline-grid;
+  place-items:center;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  color:#087b40;
+  background:#fff;
+  font-size:1rem;
+  line-height:1;
+  transition:transform .2s ease,background-color .2s ease
+}
+a.aus-apply-action:not(.aus-site-header__apply):hover,
+a.aus-apply-action:not(.aus-site-header__apply):focus-visible{
+  background:linear-gradient(135deg,#10a95d,#078242)!important;
+  box-shadow:0 17px 36px rgba(5,112,57,.4),inset 0 1px 0 rgba(255,255,255,.25)
+}
+a.aus-apply-action:not(.aus-site-header__apply):hover:after,
+a.aus-apply-action:not(.aus-site-header__apply):focus-visible:after{transform:translateX(3px)}
+a.aus-apply-action.is-clicked:not(.aus-site-header__apply):after{content:"\2713";color:#071942;background:#e8ae25;transform:scale(1.08)}
+.aus-apply-action__ripple{position:absolute;z-index:0;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.42);pointer-events:none;transform:translate(-50%,-50%) scale(0);animation:aus-action-ripple .65s ease-out forwards}
+.aus-application-toast{
+  position:fixed;
+  z-index:100000;
+  right:clamp(16px,4vw,42px);
+  bottom:clamp(16px,4vw,38px);
+  display:grid;
+  grid-template-columns:46px minmax(0,1fr);
+  gap:13px;
+  align-items:center;
+  width:min(390px,calc(100% - 32px));
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.16);
+  border-left:5px solid #e8ae25;
+  border-radius:8px;
+  color:#fff;
+  background:linear-gradient(135deg,#071942,#102862);
+  box-shadow:0 20px 60px rgba(2,10,31,.38);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(20px) scale(.97);
+  transition:opacity .25s ease,transform .25s ease,visibility .25s ease
+}
+.aus-application-toast.is-visible{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.aus-application-toast__check{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;color:#071942;background:linear-gradient(135deg,#f7c53a,#e8ae25);font-size:1.35rem;font-weight:800;box-shadow:0 8px 20px rgba(232,174,37,.25)}
+.aus-application-toast strong{display:block;margin-bottom:3px;color:#fff;font-size:.96rem}
+.aus-application-toast span:last-child{display:block;color:rgba(255,255,255,.78);font-size:.76rem;line-height:1.45}
+@keyframes aus-action-shine{0%,64%{transform:translateX(-125%)}88%,100%{transform:translateX(125%)}}
+@keyframes aus-action-ripple{to{opacity:0;transform:translate(-50%,-50%) scale(18)}}
+
 /* Large desktops: keep generous space without stretching readable text. */
 @media(min-width:1440px){
   :root{--aus-content:1240px}
@@ -173,6 +247,9 @@ body.aus-global-shell [data-id="5cb4a19"]{padding-block:clamp(52px,8vw,90px)!imp
   .aus-schedule__facts span{padding-left:32px}
   .aus-about__actions{display:grid;grid-template-columns:1fr}
   .aus-about__actions .aus-button,.aus-schedule__hero .aus-schedule__button{width:100%;min-height:52px}
+  a.aus-apply-action:not(.aus-site-header__apply){min-height:56px}
+  .aus-application-toast{right:16px;bottom:16px;grid-template-columns:40px minmax(0,1fr);padding:14px 15px}
+  .aus-application-toast__check{width:40px;height:40px}
   .aus-about__section,.aus-schedule__intro,.aus-schedule__programme,.aus-schedule__note,.aus-standard__section,.aus-standard__split{width:calc(100% - (2 * var(--aus-gutter)))}
   .aus-about__section,.aus-standard__section{padding-top:58px;padding-bottom:58px}
   .aus-about__section h2,.aus-about__cta h2,.aus-schedule__intro h2,.aus-schedule__heading h2,.aus-schedule__cta h2,.aus-standard__split h2,.aus-standard__heading h2,.aus-standard__band h2,.aus-standard__cta h2,.aus-standard__center h2{font-size:clamp(1.8rem,9vw,2.35rem)}
