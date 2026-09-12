@@ -30,6 +30,7 @@ body.aus-about-ready #page>.ekit-template-content-header,body.aus-about-ready #p
 .aus-site-footer__grid>div:not(:first-child){display:flex;flex-direction:column;align-items:flex-start}
 .aus-site-footer a,.aus-site-footer span{margin-bottom:11px;color:rgba(255,255,255,.72);font-size:.88rem;text-decoration:none}
 .aus-site-footer a:hover,.aus-site-footer a:focus{color:#e0aa2d}
+.aus-footer-social{display:flex;align-items:center;gap:10px;margin-top:20px}.aus-footer-social a{display:grid!important;place-items:center;width:40px;height:40px;margin:0!important;border:1px solid rgba(255,255,255,.22);border-radius:50%;color:#fff!important;background:rgba(255,255,255,.06)}.aus-footer-social a:hover,.aus-footer-social a:focus{border-color:#e0aa2d;color:#061335!important;background:#e0aa2d}.aus-footer-social svg{display:block;width:18px;height:18px}
 .aus-site-footer__bottom{padding:18px 20px;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);font-size:.8rem;text-align:center}
 @media(max-width:1050px){.aus-site-header__links{display:none}
 .aus-site-menu{display:block}
@@ -37,6 +38,7 @@ body.aus-about-ready #page>.ekit-template-content-header,body.aus-about-ready #p
 .aus-site-header__apply{margin-left:auto}
 }
 @media(max-width:680px){.aus-site-header__top>div{gap:10px;justify-content:center;min-height:34px}
+.aus-site-header__top{display:none!important}
 .aus-site-header__top span{display:none}
 .aus-site-header__top a{font-size:.66rem}
 .aus-site-header__top a:first-child{display:none}
