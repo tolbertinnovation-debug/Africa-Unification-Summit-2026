@@ -167,7 +167,7 @@ def enhance_about_page(text: str) -> str:
 </head>
 <body class="aus-about-ready">
 {replacement}
-<script src="../assets/summit-interactions.js?v=20260912-4" defer></script>
+<script src="../assets/summit-interactions.js?v=20260912-5" defer></script>
 </body>
 </html>
 '''
@@ -197,7 +197,7 @@ def enhance_schedule_page(text: str) -> str:
 </head>
 <body class="aus-about-ready">
 {shell}
-<script src="../assets/summit-interactions.js?v=20260912-4" defer></script>
+<script src="../assets/summit-interactions.js?v=20260912-5" defer></script>
 </body>
 </html>
 '''
@@ -234,7 +234,7 @@ def enhance_standard_page(slug: str) -> str:
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/about-shell.css"><link rel="stylesheet" href="../assets/standard-pages.css"><link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-14">
-</head><body class="aus-about-ready">{shell}<script src="../assets/summit-interactions.js?v=20260912-4" defer></script></body></html>'''
+</head><body class="aus-about-ready">{shell}<script src="../assets/summit-interactions.js?v=20260912-5" defer></script></body></html>'''
 
 
 def add_body_class(text: str, class_name: str) -> str:
@@ -316,7 +316,7 @@ def enhance_shared_brand(text: str, slug: str) -> str:
             flags=re.I | re.S,
         )
     text = re.sub(r'(<body[^>]*>)', rf'\1\n{header}', text, count=1, flags=re.I)
-    interactions = f'<script src="{prefix}assets/summit-interactions.js?v=20260912-4" defer></script>'
+    interactions = f'<script src="{prefix}assets/summit-interactions.js?v=20260912-5" defer></script>'
     return text.replace("</body>", f"{footer}\n{interactions}\n</body>", 1)
 
 
