@@ -33,16 +33,16 @@ body.aus-global-shell .ekit-video-popup-btn:focus-visible{outline:4px solid #e8a
 /* Native Summit video modal: reliable on GitHub Pages without WordPress JS. */
 body.aus-video-open{overflow:hidden!important}
 .aus-video-modal[hidden]{display:none!important}
-.aus-video-modal{position:fixed;z-index:100002;inset:0;display:grid;place-items:center;padding:clamp(14px,4vw,38px);background:rgba(2,8,25,.9);backdrop-filter:blur(8px);opacity:0;transition:opacity .22s ease}
+.aus-video-modal{position:fixed;z-index:100002;inset:0;display:grid;place-items:center;padding:clamp(14px,4vw,38px);background:transparent;opacity:0;transition:opacity .22s ease}
 .aus-video-modal.is-visible{opacity:1}
-.aus-video-modal__dialog{position:relative;width:min(980px,100%);overflow:hidden;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:#050b1b;box-shadow:0 28px 90px rgba(0,0,0,.52);transform:translateY(12px) scale(.98);transition:transform .22s ease}
+.aus-video-modal__dialog{position:relative;width:min(980px,100%);overflow:hidden;border:1px solid #dfe4ec;border-radius:10px;background:#fff;box-shadow:0 24px 70px rgba(7,25,66,.24);transform:translateY(12px) scale(.98);transition:transform .22s ease}
 .aus-video-modal.is-visible .aus-video-modal__dialog{transform:translateY(0) scale(1)}
 .aus-video-modal__bar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:58px;padding:10px 12px 10px 20px;border-bottom:3px solid #e8ae25;color:#fff;background:linear-gradient(100deg,#071942,#102862)}
 .aus-video-modal__bar strong{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
 .aus-video-modal__close{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid rgba(255,255,255,.25);border-radius:50%;color:#fff;background:rgba(255,255,255,.08);font:700 1.35rem/1 Arial,sans-serif;cursor:pointer}
 .aus-video-modal__close:hover,.aus-video-modal__close:focus-visible{color:#071942;background:#e8ae25;outline:0}
-.aus-video-modal video{display:block;width:100%;max-height:calc(100vh - 150px);background:#000;object-fit:contain}
-.aus-video-modal__hint{margin:0;padding:10px 18px;color:rgba(255,255,255,.65);background:#07132e;font-size:.7rem;text-align:center}
+.aus-video-modal video{display:block;width:100%;max-height:calc(100vh - 150px);background:#f3f5f8;object-fit:contain}
+.aus-video-modal__hint{margin:0;padding:10px 18px;color:#586174;background:#fff;font-size:.7rem;text-align:center}
 
 /* Give original homepage panels the same restrained interaction finish. */
 body.aus-global-shell .elementor-button{transition:transform .2s ease,box-shadow .2s ease!important}

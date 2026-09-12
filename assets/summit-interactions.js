@@ -58,6 +58,10 @@
 
         lastVideoTrigger = trigger;
         modalVideo.src = sourceUrl;
+        var hero = trigger.closest("section, .e-con, .elementor-section");
+        var heroImage = hero && window.getComputedStyle(hero).backgroundImage;
+        var posterMatch = heroImage && heroImage.match(/url\(["']?(.*?)["']?\)/);
+        if (posterMatch && posterMatch[1]) modalVideo.poster = posterMatch[1];
         videoModal.hidden = false;
         document.body.classList.add("aus-video-open");
         window.requestAnimationFrame(function () { videoModal.classList.add("is-visible"); });
