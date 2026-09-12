@@ -75,6 +75,33 @@ body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-description{margi
 body.aus-global-shell [data-id="3fbae03"]{width:120px!important;max-width:120px!important;margin:0!important}
 body.aus-global-shell [data-id="3fbae03"] img{display:block!important;width:120px!important;height:auto!important;opacity:.82!important}
 
+/* Host Country story: a restrained flag presentation and useful country context. */
+.aus-standard__hero--liberia{background-position:center 34%!important}
+.aus-standard__image-card--flag{
+  isolation:isolate;
+  min-height:430px;
+  padding:clamp(28px,4vw,48px);
+  overflow:visible;
+  border:1px solid #dfe4ec;
+  background:linear-gradient(145deg,#f8fafc,#eef2f7);
+  box-shadow:0 20px 55px rgba(7,25,66,.12)
+}
+.aus-standard__image-card--flag:before{content:"";position:absolute;z-index:-1;top:-12px;left:-12px;width:34%;height:42%;border-top:5px solid #e8ae25;border-left:5px solid #e8ae25}
+.aus-standard__image-card--flag:after{content:"";position:absolute;z-index:-1;right:-12px;bottom:-12px;width:34%;height:42%;border-right:5px solid #087b40;border-bottom:5px solid #087b40}
+.aus-standard__flag-frame{display:grid;place-items:center;width:100%;padding:clamp(18px,3vw,30px);border:1px solid #d8dee8;background:#fff;box-shadow:0 13px 32px rgba(7,25,66,.09)}
+.aus-standard__image-card--flag .aus-standard__flag-frame img{display:block;width:100%;height:auto;max-height:275px;object-fit:contain}
+.aus-standard__image-card--flag>span{left:clamp(18px,4vw,36px);bottom:clamp(18px,4vw,34px);padding:12px 17px;border-left:4px solid #e8ae25;background:linear-gradient(100deg,#087b40,#056633);box-shadow:0 10px 24px rgba(5,102,51,.24);letter-spacing:.04em}
+.aus-standard__host-story>p:not(.aus-standard__kicker){font-size:1rem;line-height:1.82}
+.aus-standard__country-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:28px 0 20px}
+.aus-standard__country-facts>div{min-width:0;padding:15px 14px;border-top:3px solid #087b40;border-radius:4px;background:#f4f6f9}
+.aus-standard__country-facts>div:nth-child(2){border-top-color:#e8ae25}
+.aus-standard__country-facts>div:nth-child(3){border-top-color:#111c8d}
+.aus-standard__country-facts span{display:block;margin-bottom:5px;color:#697287;font-size:.61rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.aus-standard__country-facts strong{display:block;color:#071942;font-size:.86rem;line-height:1.3}
+.aus-standard__text-link--arrow{display:inline-flex;align-items:center;gap:9px;margin-top:3px}
+.aus-standard__text-link--arrow:after{content:"\2192";transition:transform .2s ease}
+.aus-standard__text-link--arrow:hover:after,.aus-standard__text-link--arrow:focus-visible:after{transform:translateX(4px)}
+
 /* Inner-page heroes: one polished visual language across every section. */
 .aus-about__hero,.aus-schedule__hero,.aus-standard__hero{
   position:relative;
@@ -357,6 +384,19 @@ a.aus-apply-action.is-clicked:not(.aus-site-header__apply):after{content:"\2713"
   body.aus-global-shell [data-id="0ebde04"] .elementor-image-box-title{font-size:1rem!important}
   body.aus-global-shell [data-id="3fbae03"]{width:86px!important;max-width:86px!important}
   body.aus-global-shell [data-id="3fbae03"] img{width:86px!important}
+  .aus-standard__hero--liberia{background-position:58% center!important}
+  .aus-standard__image-card--flag{min-height:330px;padding:24px 18px 52px}
+  .aus-standard__image-card--flag:before{top:-7px;left:-7px;border-width:4px}
+  .aus-standard__image-card--flag:after{right:-7px;bottom:-7px;border-width:4px}
+  .aus-standard__flag-frame{padding:16px}
+  .aus-standard__image-card--flag .aus-standard__flag-frame img{max-height:205px}
+  .aus-standard__image-card--flag>span{left:18px;bottom:18px;max-width:calc(100% - 36px);padding:10px 12px;font-size:.64rem}
+  .aus-standard__host-story>p:not(.aus-standard__kicker){font-size:.96rem;line-height:1.75}
+  .aus-standard__country-facts{grid-template-columns:1fr;gap:8px;margin-top:24px}
+  .aus-standard__country-facts>div{display:grid;grid-template-columns:95px 1fr;align-items:center;padding:12px 14px;border-top:0;border-left:3px solid #087b40}
+  .aus-standard__country-facts>div:nth-child(2){border-left-color:#e8ae25}
+  .aus-standard__country-facts>div:nth-child(3){border-left-color:#111c8d}
+  .aus-standard__country-facts span{margin:0}
 }
 
 /* Very narrow phones. */
