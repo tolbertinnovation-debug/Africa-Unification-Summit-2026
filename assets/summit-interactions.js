@@ -1,6 +1,28 @@
 (function () {
   "use strict";
 
+  var menuLinks = document.querySelectorAll(".aus-site-menu nav a");
+  var cleanPath = function (value) {
+    return value.replace(/index\.html$/i, "").replace(/\/+$/, "") || "/";
+  };
+  var currentPath = cleanPath(window.location.pathname);
+
+  menuLinks.forEach(function (link) {
+    var linkPath = cleanPath(new URL(link.href, window.location.href).pathname);
+    if (linkPath === currentPath) {
+      link.classList.add("is-current");
+      link.setAttribute("aria-current", "page");
+    }
+
+    link.addEventListener("click", function (event) {
+      if (event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      menuLinks.forEach(function (item) { item.classList.remove("is-selected"); });
+      link.classList.add("is-selected");
+      window.setTimeout(function () { window.location.assign(link.href); }, 180);
+    });
+  });
+
   var applicationLinks = document.querySelectorAll('a[href*="forms.gle"]');
   if (!applicationLinks.length) return;
 

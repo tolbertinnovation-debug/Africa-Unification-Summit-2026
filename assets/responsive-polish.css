@@ -189,6 +189,48 @@ a.aus-apply-action.is-clicked:not(.aus-site-header__apply):after{content:"\2713"
 @keyframes aus-action-shine{0%,64%{transform:translateX(-125%)}88%,100%{transform:translateX(125%)}}
 @keyframes aus-action-ripple{to{opacity:0;transform:translate(-50%,-50%) scale(18)}}
 
+/* Mobile navigation feedback: gold on tap, navy/green on the current page. */
+.aus-site-menu nav a{
+  position:relative;
+  border-left:4px solid transparent;
+  transition:color .18s ease,background-color .18s ease,border-color .18s ease,transform .18s ease
+}
+.aus-site-menu nav a:hover,.aus-site-menu nav a:focus-visible{
+  color:#087b40;
+  background:#f2f7f4;
+  border-left-color:#087b40
+}
+.aus-site-menu nav a.is-current{
+  padding-right:48px;
+  border-left-color:#e8ae25;
+  color:#fff;
+  background:linear-gradient(100deg,#071942,#102862)
+}
+.aus-site-menu nav a.is-current:after{
+  content:"\2713";
+  position:absolute;
+  top:50%;
+  right:16px;
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  color:#071942;
+  background:#e8ae25;
+  font-size:.78rem;
+  font-weight:800;
+  transform:translateY(-50%)
+}
+.aus-site-menu nav a.is-selected,.aus-site-menu nav a:active{
+  padding-right:82px;
+  border-left-color:#087b40;
+  color:#071942;
+  background:linear-gradient(100deg,#f8c63a,#e8ae25);
+  transform:translateX(3px)
+}
+.aus-site-menu nav a.is-selected:after{content:"Opening";position:absolute;top:50%;right:16px;width:auto;height:auto;border-radius:0;color:#071942;background:transparent;font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;transform:translateY(-50%)}
+
 /* Large desktops: keep generous space without stretching readable text. */
 @media(min-width:1440px){
   :root{--aus-content:1240px}

@@ -163,11 +163,11 @@ def enhance_about_page(text: str) -> str:
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/about-shell.css">
   <link rel="stylesheet" href="../assets/about-page.css">
-  <link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-9">
+  <link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-10">
 </head>
 <body class="aus-about-ready">
 {replacement}
-<script src="../assets/summit-interactions.js?v=20260912-1" defer></script>
+<script src="../assets/summit-interactions.js?v=20260912-2" defer></script>
 </body>
 </html>
 '''
@@ -193,11 +193,11 @@ def enhance_schedule_page(text: str) -> str:
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/about-shell.css">
   <link rel="stylesheet" href="../assets/schedule-page.css">
-  <link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-9">
+  <link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-10">
 </head>
 <body class="aus-about-ready">
 {shell}
-<script src="../assets/summit-interactions.js?v=20260912-1" defer></script>
+<script src="../assets/summit-interactions.js?v=20260912-2" defer></script>
 </body>
 </html>
 '''
@@ -233,8 +233,8 @@ def enhance_standard_page(slug: str) -> str:
   <link rel="icon" href="../wp-content/uploads/2026/04/cropped-Africa-Unification-Summit-32x32.png" sizes="32x32">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/about-shell.css"><link rel="stylesheet" href="../assets/standard-pages.css"><link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-9">
-</head><body class="aus-about-ready">{shell}<script src="../assets/summit-interactions.js?v=20260912-1" defer></script></body></html>'''
+  <link rel="stylesheet" href="../assets/about-shell.css"><link rel="stylesheet" href="../assets/standard-pages.css"><link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-10">
+</head><body class="aus-about-ready">{shell}<script src="../assets/summit-interactions.js?v=20260912-2" defer></script></body></html>'''
 
 
 def add_body_class(text: str, class_name: str) -> str:
@@ -283,7 +283,7 @@ def enhance_shared_brand(text: str, slug: str) -> str:
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{prefix}assets/about-shell.css">
-  <link rel="stylesheet" href="{prefix}assets/responsive-polish.css?v=20260912-9">'''
+  <link rel="stylesheet" href="{prefix}assets/responsive-polish.css?v=20260912-10">'''
     text = text.replace("</head>", f"{stylesheet}\n</head>", 1)
     text = add_body_class(text, "aus-global-shell")
     # Correct visible source copy so the published mirror reads professionally.
@@ -308,7 +308,7 @@ def enhance_shared_brand(text: str, slug: str) -> str:
             flags=re.I | re.S,
         )
     text = re.sub(r'(<body[^>]*>)', rf'\1\n{header}', text, count=1, flags=re.I)
-    interactions = f'<script src="{prefix}assets/summit-interactions.js?v=20260912-1" defer></script>'
+    interactions = f'<script src="{prefix}assets/summit-interactions.js?v=20260912-2" defer></script>'
     return text.replace("</body>", f"{footer}\n{interactions}\n</body>", 1)
 
 
