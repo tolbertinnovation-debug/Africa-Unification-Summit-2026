@@ -57,6 +57,10 @@ PARTNER_LOGOS = (
     ("wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-4.29.26-PM-150x150.jpeg",
      "Africa Unification Summit partner"),
 )
+# ElementsKit initialises its video widget only when it finds an element with
+# the "ekit-video-popup" class, so this matches that one class token without
+# touching "ekit-video-popup-btn" or "ekit-video-popup-close".
+VIDEO_POPUP_CLASS = re.compile(r'class="([^"]*\bekit-video-popup(?![-\w])[^"]*)"')
 CAROUSEL_SLIDES = re.compile(
     r'(?P<open><div class="elementor-image-carousel swiper-wrapper"[^>]*>)'
     r".*?"
@@ -333,6 +337,7 @@ def enhance_shared_brand(text: str, slug: str) -> str:
         text = text.replace(old, new)
     if not slug:
         text = enhance_partner_logos(text, prefix)
+    text = disable_plugin_video_popup(text)
     # Replace inactive source buttons with useful destinations already in the site.
     for label, destination in (
         ("LEARN MORE..", f"{prefix}event-schedule/"),
@@ -347,6 +352,24 @@ def enhance_shared_brand(text: str, slug: str) -> str:
     text = re.sub(r'(<body[^>]*>)', rf'\1\n{header}', text, count=1, flags=re.I)
     interactions = f'<script src="{prefix}assets/summit-interactions.js?v=20260912-5" defer></script>'
     return text.replace("</body>", f"{footer}\n{interactions}\n</body>", 1)
+
+
+def disable_plugin_video_popup(text: str) -> str:
+    """Keep the ElementsKit video widget from building a second, dark player.
+
+    The homepage play button opens the light modal built in
+    assets/summit-interactions.js. Left alone, ElementsKit also wires
+    MediaElement and Magnific Popup to that same button, which puts a dark
+    900x507 player and a fixed black close circle over the page. The widget
+    only initialises when it finds an ".ekit-video-popup" element, so dropping
+    that one class token disables both, while ".ekit-video-popup-btn" keeps the
+    button's styling and our own click handler.
+    """
+    def strip_token(match: re.Match[str]) -> str:
+        classes = [name for name in match.group(1).split() if name != "ekit-video-popup"]
+        return 'class="' + " ".join(classes) + '"'
+
+    return VIDEO_POPUP_CLASS.sub(strip_token, text)
 
 
 def enhance_partner_logos(text: str, prefix: str) -> str:

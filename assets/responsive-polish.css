@@ -440,3 +440,11 @@ a.aus-apply-action.is-clicked:not(.aus-site-header__apply):after{content:"\2713"
   html{scroll-behavior:auto}
   *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* The homepage play button opens the summit's own video modal. Keep the
+   ElementsKit plugin's inline MediaElement player and its fixed black close
+   circle out of the page even if the plugin manages to initialise. The source
+   <video> stays in the DOM, hidden, because the modal reads its URL. */
+.ekit_self_video_wrap,
+.ekit_self_video_wrap .mejs-container,
+.mfp-close.ekit-video-popup-close{display:none!important}
