@@ -372,15 +372,17 @@ def enhance_shared_brand(text: str, slug: str) -> str:
         "BECOME A SPONSER": "BECOME A SPONSOR",
         "Checkout Recent <span>Blogs</span>": "Explore Recent <span>Updates</span>",
     }
-    # The sponsor call to action used to land on the general contact page.
+    for old, new in corrections.items():
+        text = text.replace(old, new)
+    # The sponsor call to action used to land on the general contact page. This
+    # has to run after the corrections above, and tolerate either spelling,
+    # because the source spells the button "SPONSER".
     text = re.sub(
-        r'(<a\b[^>]*\bhref=)["\'][^"\']*["\'](?=[^>]*>(?:(?!</a>).)*BECOME A SPONSOR)',
+        r'(<a\b[^>]*\bhref=)["\'][^"\']*["\'](?=[^>]*>(?:(?!</a>).)*BECOME A SPONS[EO]R)',
         rf'\1"{prefix}{PARTNER_PAGE_SLUG}/"',
         text,
         flags=re.I | re.S,
     )
-    for old, new in corrections.items():
-        text = text.replace(old, new)
     if not slug:
         text = enhance_partner_logos(text, prefix)
     text = disable_plugin_video_popup(text)
