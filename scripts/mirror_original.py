@@ -37,6 +37,32 @@ ASSET_EXTENSIONS = {
     ".css", ".js", ".mjs", ".png", ".jpg", ".jpeg", ".gif", ".webp",
     ".svg", ".ico", ".woff", ".woff2", ".ttf", ".eot", ".mp4", ".webm",
 }
+# Confirmed partner and sponsor logos, in the order they appear in the homepage
+# carousel. Paths are relative to the repository root.
+PARTNER_LOGOS = (
+    ("assets/partners/undp.png", "United Nations Development Programme"),
+    ("assets/partners/ministry-of-youth-and-sports-liberia.png",
+     "Ministry of Youth &amp; Sports, Republic of Liberia"),
+    ("assets/partners/office-of-diaspora-affairs-liberia.png",
+     "Office of the Diaspora Affairs, Republic of Liberia"),
+    ("assets/partners/actionaid.png", "ActionAid"),
+    ("assets/partners/delvillah-school-of-foreign-policy.png",
+     "Delvillah School of Foreign Policy and Diplomatic Studies"),
+    ("wp-content/uploads/2026/04/Federation-logo-150x150.png",
+     "Federation of Global Diplomacy"),
+    ("wp-content/uploads/2026/04/WhatsApp-Image-2026-04-27-at-1.13.11-PM-150x150.png",
+     "Africa Unification Summit partner"),
+    ("wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-3.10.28-PM-1-150x150.jpeg",
+     "Africa Unification Summit partner"),
+    ("wp-content/uploads/2026/04/WhatsApp-Image-2026-03-31-at-4.29.26-PM-150x150.jpeg",
+     "Africa Unification Summit partner"),
+)
+CAROUSEL_SLIDES = re.compile(
+    r'(?P<open><div class="elementor-image-carousel swiper-wrapper"[^>]*>)'
+    r".*?"
+    r'(?P<close></div>)(?=<div class="elementor-swiper-button)',
+    re.S,
+)
 URL_PATTERN = re.compile(
     r"(?:src|href|data-src|data-bg|data-lazy-src|poster)\s*=\s*['\"]([^'\"]+)['\"]"
     r"|(?:srcset|data-srcset)\s*=\s*['\"]([^'\"]+)['\"]"
@@ -300,10 +326,13 @@ def enhance_shared_brand(text: str, slug: str) -> str:
         "Inrastructure and Financing Needs": "Infrastructure and Financing Needs",
         "This is a dynamic a dynamic platform": "This is a dynamic platform",
         "Event Partners &amp; <span>Sponsers</span>": "Event Partners &amp; <span>Sponsors</span>",
+        "BECOME A SPONSER": "BECOME A SPONSOR",
         "Checkout Recent <span>Blogs</span>": "Explore Recent <span>Updates</span>",
     }
     for old, new in corrections.items():
         text = text.replace(old, new)
+    if not slug:
+        text = enhance_partner_logos(text, prefix)
     # Replace inactive source buttons with useful destinations already in the site.
     for label, destination in (
         ("LEARN MORE..", f"{prefix}event-schedule/"),
@@ -318,6 +347,25 @@ def enhance_shared_brand(text: str, slug: str) -> str:
     text = re.sub(r'(<body[^>]*>)', rf'\1\n{header}', text, count=1, flags=re.I)
     interactions = f'<script src="{prefix}assets/summit-interactions.js?v=20260912-5" defer></script>'
     return text.replace("</body>", f"{footer}\n{interactions}\n</body>", 1)
+
+
+def enhance_partner_logos(text: str, prefix: str) -> str:
+    """Show the confirmed partner and sponsor logos in the homepage carousel."""
+    total = len(PARTNER_LOGOS)
+    slides = "".join(
+        f'<div class="swiper-slide" role="group" aria-roledescription="slide"'
+        f' aria-label="{index} of {total}"><figure class="swiper-slide-inner">'
+        f'<img src="{prefix}{path}" class="swiper-slide-image" alt="{alt}"'
+        f' width="300" height="300" loading="lazy" decoding="async" />'
+        f"</figure></div>"
+        for index, (path, alt) in enumerate(PARTNER_LOGOS, start=1)
+    )
+    text, replaced = CAROUSEL_SLIDES.subn(
+        lambda match: match.group("open") + slides + match.group("close"), text, count=1
+    )
+    if not replaced:
+        raise RuntimeError("The partner logo carousel is missing from the homepage")
+    return text
 
 
 def page_output(slug: str) -> Path:
