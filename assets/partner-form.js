@@ -1,20 +1,22 @@
 /* Partnership enquiry form.
  *
  * The site is a static mirror on GitHub Pages, so there is no server of our
- * own to receive submissions. Set ENDPOINT below to a form backend that
- * accepts a POST (Formspree, Getform, Web3Forms, a Google Apps Script web app,
- * or any endpoint that allows cross-origin POSTs) and enquiries are delivered
- * straight to it.
+ * own to receive submissions. Enquiries are posted to FormSubmit, which
+ * forwards them by email to the address in ENDPOINT.
  *
- * While ENDPOINT is empty the form still works: it validates, then hands the
- * completed enquiry to the visitor's email app addressed to the Summit, and
- * also shows the text so it can be copied if no mail app opens. */
+ * FormSubmit needs a one-time activation: the first submission sends a
+ * confirmation email to that address, and enquiries are only delivered once
+ * the link in it has been clicked.
+ *
+ * If the request cannot be delivered, the form falls back to handing the
+ * enquiry to the visitor's email app and showing the text with a copy button,
+ * so a submission is never silently lost. */
 
 (function () {
   "use strict";
 
-  var ENDPOINT = "";
-  var SUMMIT_EMAIL = "info@africaunificationsummit.org";
+  var SUMMIT_EMAIL = "africaunificationsummit@gmail.com";
+  var ENDPOINT = "https://formsubmit.co/ajax/" + SUMMIT_EMAIL;
 
   var form = document.getElementById("partner-form");
   if (!form) return;
@@ -92,8 +94,7 @@
     status.scrollIntoView({ block: "center", behavior: "smooth" });
   };
 
-  /* Shown when there is no endpoint, so the enquiry is never lost even if the
-     visitor has no mail app configured. */
+  /* Shown when the enquiry could not be posted, so it is never lost. */
   var copyPanel = function (text) {
     var wrap = document.createElement("div");
     wrap.className = "aus-partner__copy";
@@ -122,6 +123,14 @@
     return wrap;
   };
 
+  var fallbackToEmail = function (data, subject, title, body) {
+    window.location.href =
+      "mailto:" + SUMMIT_EMAIL +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(asText(data));
+    show("warn", title, body, copyPanel(asText(data)));
+  };
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -132,43 +141,55 @@
       return;
     }
 
+    /* Bots fill hidden fields; people do not. Accept it quietly and stop. */
+    var honey = form.querySelector('input[name="_honey"]');
+    if (honey && honey.value !== "") {
+      show("ok", "Thank you — your enquiry is on its way", "Our partnerships team will be in touch shortly.");
+      form.reset();
+      return;
+    }
+
     var data = collect();
     var subject = "Partnership enquiry - " + data.Organisation;
 
     if (!ENDPOINT) {
-      var body = asText(data);
-      window.location.href =
-        "mailto:" + SUMMIT_EMAIL +
-        "?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
-      show(
-        "warn",
-        "Almost there — send the email to finish",
+      fallbackToEmail(data, subject, "Almost there — send the email to finish",
         "We have opened your email app with the enquiry ready to send to " + SUMMIT_EMAIL +
-        ". If nothing opened, copy the details below and email them to us.",
-        copyPanel(body)
-      );
+        ". If nothing opened, copy the details below and email them to us.");
       return;
     }
 
     submit.disabled = true;
     submit.textContent = "Sending…";
 
+    /* Underscore-prefixed keys are FormSubmit settings, not form answers. */
+    var payload = Object.assign({
+      _subject: subject,
+      _replyto: data.Email,
+      _template: "table",
+      _captcha: "false"
+    }, data);
+
     fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(Object.assign({ _subject: subject }, data))
+      body: JSON.stringify(payload)
     })
       .then(function (response) {
-        if (!response.ok) throw new Error("Request failed with status " + response.status);
-        form.reset();
-        show("ok", "Thank you — your enquiry is on its way",
-          "Our partnerships team will be in touch shortly. A copy has been sent to " + SUMMIT_EMAIL + ".");
+        return response.json().catch(function () { return {}; }).then(function (result) {
+          /* FormSubmit reports success as the string "true". */
+          if (!response.ok || String(result.success) !== "true") {
+            throw new Error(result.message || "Request failed with status " + response.status);
+          }
+          form.reset();
+          show("ok", "Thank you — your enquiry is on its way",
+            "Our partnerships team will review it and be in touch shortly.");
+        });
       })
       .catch(function () {
-        show("bad", "We could not send that just now",
-          'Please try again, or email your enquiry to <a href="mailto:' + SUMMIT_EMAIL + '">' + SUMMIT_EMAIL + "</a>.",
-          copyPanel(asText(data)));
+        fallbackToEmail(data, subject, "We could not send that automatically",
+          "Your enquiry is ready in your email app, addressed to " + SUMMIT_EMAIL +
+          ". If nothing opened, copy the details below and email them to us.");
       })
       .finally(function () {
         submit.disabled = false;
