@@ -14,10 +14,13 @@ on:
       - templates/about-the-host-content.html
       - templates/blog-content.html
       - templates/contact-content.html
+      - templates/become-a-partner-content.html
       - assets/about-page.css
       - assets/about-shell.css
       - assets/schedule-page.css
       - assets/standard-pages.css
+      - assets/partner-form.css
+      - assets/partner-form.js
       - assets/responsive-polish.css
       - assets/summit-interactions.js
 
@@ -39,7 +42,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html about-us event-schedule organizer speakers about-the-host blog contact wp-content wp-includes
+          git add index.html about-us event-schedule organizer speakers about-the-host blog contact become-a-partner wp-content wp-includes
           if git diff --cached --quiet; then
             echo "The static mirror is already current."
           else

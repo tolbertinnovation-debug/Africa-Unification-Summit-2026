@@ -19,6 +19,8 @@ HOSTS = {"africaunificationsummit.org", "www.africaunificationsummit.org"}
 ROOT = Path(__file__).resolve().parents[1]
 ABOUT_TEMPLATE = ROOT / "templates" / "about-page.html"
 SCHEDULE_TEMPLATE = ROOT / "templates" / "schedule-content.html"
+PARTNER_PAGE_SLUG = "become-a-partner"
+PARTNER_PAGE_TEMPLATE = ROOT / "templates" / "become-a-partner-content.html"
 STANDARD_TEMPLATES = {
     slug: ROOT / "templates" / f"{slug}-content.html"
     for slug in ("organizer", "speakers", "about-the-host", "blog", "contact")
@@ -267,6 +269,43 @@ def enhance_standard_page(slug: str) -> str:
 </head><body class="aus-about-ready">{shell}<script src="../assets/summit-interactions.js?v=20260912-5" defer></script></body></html>'''
 
 
+def build_partner_page() -> str:
+    """Build the standalone "Become a Partner" page.
+
+    This page has no counterpart on the WordPress source, so it is generated
+    purely from the shared shell plus its own template rather than mirrored.
+    """
+    shell = ABOUT_TEMPLATE.read_text(encoding="utf-8").strip()
+    content = PARTNER_PAGE_TEMPLATE.read_text(encoding="utf-8").strip()
+    shell = re.sub(
+        r'<main id="main-content">.*?</main>', lambda _: content, shell, count=1, flags=re.S
+    )
+    shell = shell.replace(' class="is-current"', "")
+    return f'''<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Become a Partner - Africa Unification Summit</title>
+  <meta name="description" content="Partner with or sponsor the Africa Unification Summit 2026 in Monrovia, Liberia, November 16-20, 2026. Send a partnership enquiry to the Summit team.">
+  <link rel="icon" href="../wp-content/uploads/2026/04/cropped-Africa-Unification-Summit-32x32.png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/about-shell.css">
+  <link rel="stylesheet" href="../assets/standard-pages.css">
+  <link rel="stylesheet" href="../assets/partner-form.css?v=20260914-1">
+  <link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-14">
+</head>
+<body class="aus-about-ready">
+{shell}
+<script src="../assets/summit-interactions.js?v=20260912-5" defer></script>
+<script src="../assets/partner-form.js?v=20260914-1" defer></script>
+</body>
+</html>
+'''
+
+
 def add_body_class(text: str, class_name: str) -> str:
     """Add a class to the first body tag while preserving existing attributes."""
     def update(match: re.Match[str]) -> str:
@@ -333,6 +372,13 @@ def enhance_shared_brand(text: str, slug: str) -> str:
         "BECOME A SPONSER": "BECOME A SPONSOR",
         "Checkout Recent <span>Blogs</span>": "Explore Recent <span>Updates</span>",
     }
+    # The sponsor call to action used to land on the general contact page.
+    text = re.sub(
+        r'(<a\b[^>]*\bhref=)["\'][^"\']*["\'](?=[^>]*>(?:(?!</a>).)*BECOME A SPONSOR)',
+        rf'\1"{prefix}{PARTNER_PAGE_SLUG}/"',
+        text,
+        flags=re.I | re.S,
+    )
     for old, new in corrections.items():
         text = text.replace(old, new)
     if not slug:
@@ -451,6 +497,11 @@ def main() -> None:
         else:
             rendered = enhance_shared_brand(rendered, slug)
         output.write_text(rendered, encoding="utf-8")
+
+    partner_page = page_output(PARTNER_PAGE_SLUG)
+    partner_page.parent.mkdir(parents=True, exist_ok=True)
+    partner_page.write_text(build_partner_page(), encoding="utf-8")
+    print(f"Built local page: /{PARTNER_PAGE_SLUG}/")
 
     print(f"Static mirror ready: {len(page_documents)} pages, {len(downloaded)} assets")
 

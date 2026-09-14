@@ -1,0 +1,80 @@
+/* Partnership enquiry form. Builds on the tokens and layout in
+   standard-pages.css, which this file is always loaded after. */
+
+.aus-partner__intro{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start}
+.aus-partner__benefits{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.aus-partner__benefits li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:18px 20px;border:1px solid var(--aus-line);border-radius:14px;background:var(--aus-soft)}
+.aus-partner__benefits strong{display:block;margin-bottom:3px;font-size:.97rem}
+.aus-partner__benefits span{color:var(--aus-muted);font-size:.9rem;line-height:1.65}
+.aus-partner__tick{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--aus-green);color:#fff;font-size:.72rem;font-weight:800}
+
+.aus-partner__form-card{padding:44px;border:1px solid var(--aus-line);border-radius:18px;background:#fff;box-shadow:0 18px 50px rgba(7,25,66,.08)}
+.aus-partner__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 22px}
+.aus-partner__field{display:flex;flex-direction:column;gap:7px}
+.aus-partner__field--wide{grid-column:1/-1}
+.aus-partner__field label{font-size:.83rem;font-weight:700;letter-spacing:.01em}
+.aus-partner__field label .req{color:#c0392b}
+.aus-partner__field small{color:var(--aus-muted);font-size:.78rem;line-height:1.5}
+
+.aus-partner__form input[type=text],
+.aus-partner__form input[type=email],
+.aus-partner__form input[type=tel],
+.aus-partner__form input[type=url],
+.aus-partner__form select,
+.aus-partner__form textarea{
+  width:100%;min-height:50px;padding:13px 15px;
+  font:inherit;font-size:.92rem;color:var(--aus-ink);
+  background:#fff;border:1px solid var(--aus-line);border-radius:11px;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.aus-partner__form textarea{min-height:132px;resize:vertical;line-height:1.65}
+.aus-partner__form select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%235d6679' d='M5.5 7.5 10 12l4.5-4.5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;background-size:20px;padding-right:42px}
+.aus-partner__form :is(input,select,textarea):focus-visible{outline:none;border-color:var(--aus-blue);box-shadow:0 0 0 3px rgba(17,28,141,.16)}
+.aus-partner__form :is(input,select,textarea)[aria-invalid=true]{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.13)}
+.aus-partner__error{display:none;color:#c0392b;font-size:.78rem;font-weight:600}
+.aus-partner__error.is-shown{display:block}
+
+.aus-partner__options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0;padding:14px 0 0;border:0}
+.aus-partner__options legend{padding:0;margin-bottom:4px;font-size:.83rem;font-weight:700}
+.aus-partner__option{display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:center;padding:13px 15px;border:1px solid var(--aus-line);border-radius:11px;font-size:.88rem;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+.aus-partner__option:hover{border-color:#b9c2d4}
+.aus-partner__option input{width:18px;height:18px;accent-color:var(--aus-green);cursor:pointer}
+.aus-partner__option:has(input:checked){border-color:var(--aus-green);background:rgba(8,123,64,.06)}
+.aus-partner__option:has(input:focus-visible){box-shadow:0 0 0 3px rgba(17,28,141,.16)}
+
+.aus-partner__consent{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding-top:6px}
+.aus-partner__consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--aus-green);cursor:pointer}
+.aus-partner__consent span{color:var(--aus-muted);font-size:.85rem;line-height:1.65}
+
+.aus-partner__submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;margin-top:6px;padding:14px 34px;border:0;border-radius:999px;color:#fff;background:var(--aus-green);font:inherit;font-size:.84rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 26px rgba(3,73,36,.24);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.aus-partner__submit:hover{background:#066c38;transform:translateY(-1px);box-shadow:0 16px 32px rgba(3,73,36,.28)}
+.aus-partner__submit[disabled]{opacity:.62;cursor:progress;transform:none}
+.aus-partner__actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:26px}
+.aus-partner__actions p{margin:0;color:var(--aus-muted);font-size:.8rem;line-height:1.6}
+
+.aus-partner__status{display:none;gap:14px;margin-bottom:26px;padding:18px 20px;border-radius:13px;font-size:.9rem;line-height:1.65}
+.aus-partner__status.is-shown{display:grid;grid-template-columns:auto 1fr}
+.aus-partner__status strong{display:block;margin-bottom:3px}
+.aus-partner__status--ok{border:1px solid rgba(8,123,64,.35);background:rgba(8,123,64,.08);color:#0a5f34}
+.aus-partner__status--warn{border:1px solid rgba(232,174,37,.5);background:rgba(232,174,37,.12);color:#6b4c06}
+.aus-partner__status--bad{border:1px solid rgba(192,57,43,.35);background:rgba(192,57,43,.08);color:#94281d}
+.aus-partner__status a{color:inherit;font-weight:700}
+.aus-partner__copy{margin-top:12px}
+.aus-partner__copy textarea{width:100%;min-height:190px;padding:13px 15px;font:inherit;font-size:.82rem;line-height:1.6;color:var(--aus-ink);background:#fff;border:1px solid var(--aus-line);border-radius:11px}
+.aus-partner__copy button{margin-top:9px;padding:10px 20px;border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer}
+
+@media(max-width:1000px){
+  .aus-partner__intro{grid-template-columns:1fr;gap:44px}
+  .aus-partner__form-card{padding:32px}
+}
+@media(max-width:640px){
+  .aus-partner__grid,.aus-partner__options{grid-template-columns:1fr}
+  .aus-partner__form-card{padding:24px 20px;border-radius:14px}
+  .aus-partner__submit{width:100%}
+  .aus-partner__actions{gap:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .aus-partner__submit:hover{transform:none}
+}
