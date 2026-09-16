@@ -1,0 +1,87 @@
+/* Delegate application form. Builds on the tokens and layout in
+   standard-pages.css, which this file is always loaded after. */
+
+.aus-apply__steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:54px}
+.aus-apply__step{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:22px 24px;border:1px solid var(--aus-line);border-radius:14px;background:var(--aus-soft)}
+.aus-apply__step b{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--aus-navy);color:#fff;font-size:.82rem}
+.aus-apply__step strong{display:block;margin-bottom:4px;font-size:.97rem}
+.aus-apply__step span{color:var(--aus-muted);font-size:.87rem;line-height:1.6}
+
+.aus-apply__card{max-width:880px;margin-inline:auto;padding:48px;border:1px solid var(--aus-line);border-radius:18px;background:#fff;box-shadow:0 18px 50px rgba(7,25,66,.08)}
+
+.aus-apply__fieldset{margin:0 0 38px;padding:0;border:0}
+.aus-apply__fieldset:last-of-type{margin-bottom:26px}
+.aus-apply__legend{width:100%;padding:0 0 18px;margin-bottom:24px;border-bottom:1px solid var(--aus-line);font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--aus-green)}
+.aus-apply__legend span{display:inline-grid;place-items:center;width:22px;height:22px;margin-right:10px;border-radius:50%;background:var(--aus-green);color:#fff;font-size:.7rem;vertical-align:-5px}
+
+.aus-apply__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 22px}
+.aus-apply__field{display:flex;flex-direction:column;gap:7px}
+.aus-apply__field--wide{grid-column:1/-1}
+.aus-apply__field label{font-size:.83rem;font-weight:700}
+.aus-apply__field label .req,.aus-apply__legend .req{color:#c0392b}
+.aus-apply__field small{color:var(--aus-muted);font-size:.78rem;line-height:1.5}
+
+.aus-apply__form input[type=text],
+.aus-apply__form input[type=email],
+.aus-apply__form input[type=tel],
+.aus-apply__form input[type=date],
+.aus-apply__form select,
+.aus-apply__form textarea{
+  width:100%;min-height:50px;padding:13px 15px;
+  font:inherit;font-size:.92rem;color:var(--aus-ink);
+  background:#fff;border:1px solid var(--aus-line);border-radius:11px;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.aus-apply__form textarea{min-height:120px;resize:vertical;line-height:1.65}
+.aus-apply__form select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%235d6679' d='M5.5 7.5 10 12l4.5-4.5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;background-size:20px;padding-right:42px}
+.aus-apply__form :is(input,select,textarea):focus-visible{outline:none;border-color:var(--aus-blue);box-shadow:0 0 0 3px rgba(17,28,141,.16)}
+.aus-apply__form :is(input,select,textarea)[aria-invalid=true]{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.13)}
+.aus-apply__error{display:none;color:#c0392b;font-size:.78rem;font-weight:600}
+.aus-apply__error.is-shown{display:block}
+
+.aus-apply__choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;grid-column:1/-1}
+.aus-apply__choices--three{grid-template-columns:repeat(3,1fr)}
+.aus-apply__grouplabel{grid-column:1/-1;margin-bottom:-2px;font-size:.83rem;font-weight:700}
+.aus-apply__choice{display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:center;padding:13px 15px;border:1px solid var(--aus-line);border-radius:11px;font-size:.88rem;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+.aus-apply__choice:hover{border-color:#b9c2d4}
+.aus-apply__choice input{width:18px;height:18px;accent-color:var(--aus-green);cursor:pointer}
+.aus-apply__choice:has(input:checked){border-color:var(--aus-green);background:rgba(8,123,64,.06)}
+.aus-apply__choice:has(input:focus-visible){box-shadow:0 0 0 3px rgba(17,28,141,.16)}
+
+.aus-apply__consent{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;grid-column:1/-1;padding-top:4px}
+.aus-apply__consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--aus-green);cursor:pointer}
+.aus-apply__consent span{color:var(--aus-muted);font-size:.85rem;line-height:1.65}
+
+.aus-apply__submit{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:15px 40px;border:0;border-radius:999px;color:#fff;background:var(--aus-green);font:inherit;font-size:.85rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 26px rgba(3,73,36,.24);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.aus-apply__submit:hover{background:#066c38;transform:translateY(-1px);box-shadow:0 16px 32px rgba(3,73,36,.28)}
+.aus-apply__submit[disabled]{opacity:.62;cursor:progress;transform:none}
+.aus-apply__actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding-top:24px;border-top:1px solid var(--aus-line)}
+.aus-apply__actions p{margin:0;color:var(--aus-muted);font-size:.8rem;line-height:1.6}
+.aus-apply__actions a{color:var(--aus-blue);font-weight:700}
+
+.aus-apply__status{display:none;gap:14px;margin-bottom:30px;padding:18px 20px;border-radius:13px;font-size:.9rem;line-height:1.65}
+.aus-apply__status.is-shown{display:grid;grid-template-columns:auto 1fr}
+.aus-apply__status strong{display:block;margin-bottom:3px}
+.aus-apply__status--ok{border:1px solid rgba(8,123,64,.35);background:rgba(8,123,64,.08);color:#0a5f34}
+.aus-apply__status--warn{border:1px solid rgba(232,174,37,.5);background:rgba(232,174,37,.12);color:#6b4c06}
+.aus-apply__status--bad{border:1px solid rgba(192,57,43,.35);background:rgba(192,57,43,.08);color:#94281d}
+.aus-apply__status a{color:inherit;font-weight:700}
+.aus-apply__copy{margin-top:12px}
+.aus-apply__copy textarea{width:100%;min-height:190px;padding:13px 15px;font:inherit;font-size:.82rem;line-height:1.6;color:var(--aus-ink);background:#fff;border:1px solid var(--aus-line);border-radius:11px}
+.aus-apply__copy button{margin-top:9px;padding:10px 20px;border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer}
+
+@media(max-width:1000px){
+  .aus-apply__steps{grid-template-columns:1fr}
+  .aus-apply__card{padding:34px}
+}
+@media(max-width:640px){
+  .aus-apply__grid,.aus-apply__choices,.aus-apply__choices--three{grid-template-columns:1fr}
+  .aus-apply__card{padding:24px 20px;border-radius:14px}
+  .aus-apply__submit{width:100%}
+  .aus-apply__legend{margin-bottom:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .aus-apply__submit:hover{transform:none}
+}

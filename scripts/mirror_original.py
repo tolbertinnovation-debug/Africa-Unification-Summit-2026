@@ -19,6 +19,9 @@ HOSTS = {"africaunificationsummit.org", "www.africaunificationsummit.org"}
 ROOT = Path(__file__).resolve().parents[1]
 ABOUT_TEMPLATE = ROOT / "templates" / "about-page.html"
 SCHEDULE_TEMPLATE = ROOT / "templates" / "schedule-content.html"
+APPLY_PAGE_SLUG = "apply"
+APPLY_PAGE_TEMPLATE = ROOT / "templates" / "apply-content.html"
+GOOGLE_FORM_URL = "https://forms.gle/fHhAdoPqGvCWSJGs8"
 PARTNER_PAGE_SLUG = "become-a-partner"
 PARTNER_PAGE_TEMPLATE = ROOT / "templates" / "become-a-partner-content.html"
 STANDARD_TEMPLATES = {
@@ -269,14 +272,10 @@ def enhance_standard_page(slug: str) -> str:
 </head><body class="aus-about-ready">{shell}<script src="../assets/summit-interactions.js?v=20260912-5" defer></script></body></html>'''
 
 
-def build_partner_page() -> str:
-    """Build the standalone "Become a Partner" page.
-
-    This page has no counterpart on the WordPress source, so it is generated
-    purely from the shared shell plus its own template rather than mirrored.
-    """
+def build_local_page(template: Path, title: str, description: str, stylesheet: str, script: str) -> str:
+    """Build a page that exists only here, from the shared shell and a template."""
     shell = ABOUT_TEMPLATE.read_text(encoding="utf-8").strip()
-    content = PARTNER_PAGE_TEMPLATE.read_text(encoding="utf-8").strip()
+    content = template.read_text(encoding="utf-8").strip()
     shell = re.sub(
         r'<main id="main-content">.*?</main>', lambda _: content, shell, count=1, flags=re.S
     )
@@ -286,24 +285,48 @@ def build_partner_page() -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Become a Partner - Africa Unification Summit</title>
-  <meta name="description" content="Partner with or sponsor the Africa Unification Summit 2026 in Monrovia, Liberia, November 16-20, 2026. Send a partnership enquiry to the Summit team.">
+  <title>{title} - Africa Unification Summit</title>
+  <meta name="description" content="{description}">
   <link rel="icon" href="../wp-content/uploads/2026/04/cropped-Africa-Unification-Summit-32x32.png" sizes="32x32">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/about-shell.css">
   <link rel="stylesheet" href="../assets/standard-pages.css">
-  <link rel="stylesheet" href="../assets/partner-form.css?v=20260914-1">
+  <link rel="stylesheet" href="../assets/{stylesheet}?v=20260916-1">
   <link rel="stylesheet" href="../assets/responsive-polish.css?v=20260912-14">
 </head>
 <body class="aus-about-ready">
 {shell}
 <script src="../assets/summit-interactions.js?v=20260912-5" defer></script>
-<script src="../assets/partner-form.js?v=20260914-1" defer></script>
+<script src="../assets/{script}?v=20260916-1" defer></script>
 </body>
 </html>
 '''
+
+
+def build_apply_page() -> str:
+    """Build the standalone delegate application page."""
+    return build_local_page(
+        APPLY_PAGE_TEMPLATE,
+        "Apply to Attend",
+        "Apply to attend the Africa Unification Summit 2026 in Monrovia, Liberia, "
+        "November 16-20, 2026. Register as a delegate, speaker, exhibitor, or media.",
+        "apply-form.css",
+        "apply-form.js",
+    )
+
+
+def build_partner_page() -> str:
+    """Build the standalone "Become a Partner" page."""
+    return build_local_page(
+        PARTNER_PAGE_TEMPLATE,
+        "Become a Partner",
+        "Partner with or sponsor the Africa Unification Summit 2026 in Monrovia, "
+        "Liberia, November 16-20, 2026. Send a partnership enquiry to the Summit team.",
+        "partner-form.css",
+        "partner-form.js",
+    )
 
 
 def add_body_class(text: str, class_name: str) -> str:
@@ -385,6 +408,7 @@ def enhance_shared_brand(text: str, slug: str) -> str:
     )
     if not slug:
         text = enhance_partner_logos(text, prefix)
+    text = point_apply_links_at_form(text, prefix)
     text = disable_plugin_video_popup(text)
     # Replace inactive source buttons with useful destinations already in the site.
     for label, destination in (
@@ -418,6 +442,31 @@ def disable_plugin_video_popup(text: str) -> str:
         return 'class="' + " ".join(classes) + '"'
 
     return VIDEO_POPUP_CLASS.sub(strip_token, text)
+
+
+def point_apply_links_at_form(text: str, prefix: str) -> str:
+    """Send the Apply calls to action to the on-site application form.
+
+    They used to open a Google Form in a new tab, so the target and rel
+    attributes are dropped along with the external URL.
+    """
+    def rewrite(match: re.Match[str]) -> str:
+        tag = re.sub(
+            r'\bhref=["\'][^"\']*["\']',
+            lambda _: f'href="{prefix}{APPLY_PAGE_SLUG}/"',
+            match.group(0),
+            count=1,
+            flags=re.I,
+        )
+        tag = re.sub(r'\s+(?:target|rel)=["\'][^"\']*["\']', "", tag, flags=re.I)
+        return tag
+
+    return re.sub(
+        r'<a\b[^>]*\bhref=["\'][^"\']*forms\.gle/[^"\']*["\'][^>]*>',
+        rewrite,
+        text,
+        flags=re.I,
+    )
 
 
 def enhance_partner_logos(text: str, prefix: str) -> str:
@@ -500,10 +549,11 @@ def main() -> None:
             rendered = enhance_shared_brand(rendered, slug)
         output.write_text(rendered, encoding="utf-8")
 
-    partner_page = page_output(PARTNER_PAGE_SLUG)
-    partner_page.parent.mkdir(parents=True, exist_ok=True)
-    partner_page.write_text(build_partner_page(), encoding="utf-8")
-    print(f"Built local page: /{PARTNER_PAGE_SLUG}/")
+    for slug, builder in ((PARTNER_PAGE_SLUG, build_partner_page), (APPLY_PAGE_SLUG, build_apply_page)):
+        local_page = page_output(slug)
+        local_page.parent.mkdir(parents=True, exist_ok=True)
+        local_page.write_text(builder(), encoding="utf-8")
+        print(f"Built local page: /{slug}/")
 
     print(f"Static mirror ready: {len(page_documents)} pages, {len(downloaded)} assets")
 
