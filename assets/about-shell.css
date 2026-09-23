@@ -102,3 +102,6 @@ body.aus-global-shell .aus-site-search{display:grid;place-items:center;grid-colu
 body.aus-global-shell .aus-site-search svg{width:21px;height:21px}
 body.aus-global-shell .aus-site-header__apply{grid-column:3;grid-row:1;height:62px!important;min-height:62px!important;margin:0!important;padding:8px 6px!important;border-radius:0;font-size:.76rem!important}
 }
+
+.aus-site-footer__bottom a{margin:0;color:inherit;font-size:inherit;text-decoration:underline;text-underline-offset:3px}
+.aus-site-footer__bottom a:hover,.aus-site-footer__bottom a:focus{color:#e0aa2d}
