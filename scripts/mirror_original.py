@@ -502,6 +502,10 @@ def download_asset(url: str) -> tuple[str, bytes, str]:
 
 
 def main() -> None:
+    if (ROOT / "MAINTENANCE_MODE").exists():
+        print("Temporary offline mode is enabled; original website content is preserved.")
+        return
+
     queued: set[str] = set()
     page_documents: list[tuple[str, Path, str]] = []
 
